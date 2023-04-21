@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="{% static 'hello/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="main-bg">
+            <div class="header-sec cus-margin">
+                <img src="{% static 'hello/images/book-solid.png' %}">
+                <nav class="navbar">
+                    <a>Home</a>
+                    <a href="">Catalogue</a>
+                    <a>Services</a>
+                    <a>Library Staffs</a>
+                    <a>Contact</a>
+                    <img class="img1" onclick="openLogin()" 
+                    src="{% static 'hello/images/profile.png' %}">
+                </nav>
+            </div>
+            <div class="row1">
+                <h1>Library Management System</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Contents -->
+    <div class="body-con">
+        <div class="">
+        </div>
+    </div>
+
+    <!-- popup signup/login -->
+    <div class="chat-popup" id="loginForm">
+        <div class="flex-cus flexm scroll1">
+            <div class="block1 width5">
+                <img class="img1" src="{% static 'hello/images/popup-library.jpg' %}">
+                <div class="block1" style="margin-top: 20px;">
+                    <h3>Lorem ipsum<br></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
+                </div>
+            </div>
+            <div class="width5 form1">
+                <form action="{% url 'hello:index' %}" method="post" class="popup-form">
+                    {% csrf_token %} 
+                    <div style="display: flex;justify-content:space-between">
+                        <h1 class="cus-h1">Login</h1>
+                        <!-- <div class="close-btn" style="cursor: pointer;" onclick="closepopup()">&times;</div> -->
+                    </div>
+                    <label style="font-style: normal;" for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Username" name="username" required><br>
+        
+                    <label style="font-style: normal;" for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Password" name="password" required><br>
+        
+                    <button type="submit" class="button">Submit</button><br>
+
+                    <span style="text-align: center;margin-bottom: 5px;">
+                        Don't Have a account? <a 
+                        href="{% url 'hello:signup' %}" 
+                        onclick="closeLogin();openSignUp()">Sign Up</a></span>
+                    <div><a href="{% url 'hello:libup' %}"> Sign Up</a> here if you're a Librarian</div>
+
+                    <div class="align1">
+                        <img class="img3"  onclick="closeLogin()" 
+                        src="{% static 'hello/images/xmark.png' %}">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- signup popup -->
+    <!-- <div class="chat-popup-cus" id="signUpForm">
+        <div class="flex-cus flexm scroll1">
+            <div class="block1 width5">
+                <img class="img1" src="images/signup.jpg">
+                <div class="block1" style="margin-top: 20px;">
+                    <h3>Lorem ipsum<br></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
+                </div>
+            </div>
+            <div class="width5">
+                <form action="send.php" method="post" class="popup-form">
+                    <div style="display: flex;justify-content:space-between">
+                        <h1>Sign Up</h1>
+                        <div class="close-btn" style="cursor: pointer;" onclick="closepopup()">&times;</div>
+                    </div>
+        
+                    <label style="font-style: normal;" for="number"><b>Phone Number</b></label>
+                    <input type="tel" placeholder="Phone Number" name="number" required><br>
+
+                    <label style="font-style: normal;" for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Password" name="password" required><br>
+
+                    <button type="submit" class="button">Submit</button>
+
+                    <span style="text-align: center;">Already Have a account? <a onclick="closeSignUp();openLogin()">Login</a></span>
+
+                    <div class="align1">
+                        <img class="img3"  onclick="closeSignUp()" src="images/xmark.png">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+
+    <script>
+        function openLogin(){
+            let popup=document.getElementById("loginForm");
+            popup.classList.add("open-login");
+            var blur= document.getElementById('Wrapper');
+            blur.classList.toggle('active');
+        }
+
+        function closeLogin(){
+            let popup=document.getElementById("loginForm");
+            popup.classList.remove("open-login");
+            var blur= document.getElementById('Wrapper');
+            blur.classList.toggle('active');    
+        }
+    </script>
+</body>
+</html>

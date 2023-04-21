@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue | Library Management System</title>
+
+    <!-- Bootstrap cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="{% static 'hello/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="main-bg cat-bg">
+            <div class="header-sec cus-margin">
+                <img src="{% static 'hello/images/book-solid.png' %}">
+                <nav class="navbar">
+                    <a href="{% url 'hello:index' %}">Home</a>
+                    <a>Catalogue</a>
+                    <a>Services</a>
+                    <a>Library Staffs</a>
+                    <a>Contact</a>
+                    <a href="{% url 'hello:logout' %}">Logout</a>
+                    <img class="img1" onclick="openLogin()" 
+                    src="{% static 'hello/images/profile.png' %}">
+                </nav>
+            </div>
+            <div class="row1">
+                <h1>Welcome</h1>
+                <div class="searchbar">
+                    <input type="text" id="search" name="search">
+                    <button style = "background-color: red; border-style: none;
+                    background-color: #cd0000;color: #ffffff;height: 40px;width: 80px;border-radius: 10px;"
+                    id="searchButton">search</button>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Contents -->
+    <div class="cat-body-con">
+        <div class="row">
+            <div style="margin-left: 150px; width: 700px;" class="col-md-4 col-sm-6 col-xs-12">
+                <div class="pad1">
+                    <div class="books-block">
+                        <div class="cus-flex">
+                            <img src="" alt="" class="src">
+                        </div>
+                        <h4></h4>
+                        <h5></h5>
+                        <p></p>
+                        <button class = "b1" id="rent">Rent</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    const csrftoken = getCookie('csrftoken');
+
+    let row = document.querySelector('.cat-body-con')
+    row.style.visibility = 'hidden'
+
+    let searchButton =  document.querySelector('#searchButton')
+    let bid;
+    let input = document.querySelector('#search')
+    let h4 = document.querySelector('h4')
+    let h5 = document.querySelector('h5')
+    let rentButton = document.querySelector('#rent')
+    h4.textContent = "";
+    h5.textContent = "";
+    let p = document.querySelector('p')
+    p.textContent = ""
+    searchButton.addEventListener('click',(e)=>{
+    e.stopPropagation()
+    let search = input.value;
+    input.value = ""
+    fetch("http://127.0.0.1:8000/retrieve")
+    .then(response => response.json())
+    .then(data =>{
+        let flag = 0;
+        for(i in data)
+        {
+            if(data[i].title==search)
+            {
+                flag=1;
+                bid = data[i].id;
+                break;
+            }
+        }
+        if(flag==1)
+        {
+            h4.textContent = data[i].title;
+            h5.textContent = `Author : ${data[i].author}`;
+            p.textContent = `stock left : ${data[i].stock}`;
+            row.style.visibility = 'visible';
+            rentButton.style.visibility = 'visible'
+
+        }
+        else{
+            row.style.visibility = 'visible';
+            h4.textContent = "no such book :("
+            rentButton.style.visibility = 'hidden'
+        }
+
+    })
+    
+
+    })
+
+    rentButton.addEventListener('click',()=>{
+        fetch("http://127.0.0.1:8000/rent",{
+        method:'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRFToken' : csrftoken
+        },
+        body:JSON.stringify({
+            'bid':bid
+        })
+    })
+    location.assign("http://127.0.0.1:8000/student")
+})
+</script>
+</html>

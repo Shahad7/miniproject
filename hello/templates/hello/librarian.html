@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue | Library Management System</title>
+
+    <!-- Bootstrap cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="{% static 'hello/style.css' %}">
+</head>
+<body onload="makeCards()">
+
+    <a style ="color:black; font-size :30px; margin-top:50px;margin-left: 1000px;
+                "href="{% url 'hello:logout' %}">Logout</a>
+    <!-- Main Contents -->
+    <div class="cat-body-con" id="Wrapper">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-1" onclick="openAddBook()">
+                <div class="pad1">
+                    <div class="books-block add-book">
+                        <div class="cus-flex">
+                            <img src="{% static 'hello/images/plus-solid.png' %}" alt="" class="src">
+                        </div>
+                        <h4>Add a book</h4>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- adding book block -->
+    <div class="add-book-popup" id="addBook">
+        <div class="cus-flex-btw">
+            <h4>Add a book</h4>
+            <img src="{% static 'hello/images/xmark.png' %}" alt="" class="src" 
+            onclick="closeAddBook()">
+        </div>
+        <div class="cus-grid">
+            <form action="{% url 'hello:librarian' %}" id="addbBook" method="post">
+            {% csrf_token %}
+                <input type="text" name="title" placeholder="Book Name">
+                <input type="text" name="author" id="author" placeholder="Author Name">
+                <input type="number" name="stock" id="stock" placeholder="Number of items">
+                <label for="image">Image of the book</label>
+                <input type="file" class="blockv" name="image" id="image" placeholder="Image of the book">
+                <button for="addbBook">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        function openAddBook(){
+            let bookpopup=document.getElementById("addBook");
+            bookpopup.classList.add("open-visibility");
+            var blur= document.getElementById('Wrapper');
+            blur.classList.toggle('active');
+        }
+
+        function closeAddBook(){
+            let bookpopup=document.getElementById("addBook");
+            bookpopup.classList.remove("open-visibility");
+            var blur= document.getElementById('Wrapper');
+            blur.classList.toggle('active');    
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+
+        function makeCards(){
+
+            const row = document.querySelector('.row')
+
+            fetch("http://127.0.0.1:8000/retrieve")
+            .then(response => response.json())
+            .then(data =>{
+                let flag = 0;
+                console.log(data)
+                for(i in data)
+                {
+                    let col = document.createElement('div')
+                    col.classList.add('col-md-4', 'col-sm-6','col-xs-12')
+                    let pad = document.createElement('div')
+                    pad.classList.add('pad1')
+                    let block = document.createElement('div')
+                    block.classList.add('books-block')
+                    let flex = document.createElement('div')
+                    flex.classList.add('cus-flex')
+                    let img = document.createElement('img')
+                    img.classList.add('src')
+                    flex.appendChild(img)
+                    let h4 = document.createElement('h4')
+                    h4.textContent = data[i].title
+                    let h5 = document.createElement('h5')
+                    h5.textContent = `Author : ${data[i].author}`
+                    let flex1 = document.createElement('div')
+                    flex1.classList.add('flex1')
+                    let p = document.createElement('p')
+                    p.textContent = `Stock Left : `
+                    let input = document.createElement('input')
+                    input.type = 'number'
+                    input.value = data[i].stock     
+                    flex1.appendChild(p)
+                    flex1.appendChild(input)
+                    let b1 = document.createElement('button')
+                    b1.classList.add('b1')
+                    b1.textContent = "Delete"
+                    b1.setAttribute('id',data[i].id)
+                    b1.addEventListener('click',()=>{
+                        fetch("http://127.0.0.1:8000/delete",{
+                            method:'POST',
+                            headers: {
+                                'Content-Type' : 'application/json',
+                                'X-CSRFToken' : csrftoken
+                            },
+                            body:JSON.stringify({
+                                'bid': b1.getAttribute('id')
+                            })
+                        })
+                        location.assign("http://127.0.0.1:8000/librarian")
+                    })
+                    block.append(flex,h4,h5,flex1,b1)
+                    pad.appendChild(block)
+                    col.appendChild(pad)
+                    row.appendChild(col)
+                }
+            })
+
+            
+            
+        }
+    </script>
+</body>
+</html>
