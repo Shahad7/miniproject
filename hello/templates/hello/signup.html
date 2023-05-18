@@ -12,7 +12,7 @@
     
     <div class="f-container">
         <div class="signup-container">
-            <form id = "student-signup" action="{% url 'hello:signup' %}" method="post">
+            <form id = "student-signup" autocomplete="off" action="{% url 'hello:signup' %}" method="post">
                 {% csrf_token %}
                 <input type="text" name="username" id="username" placeholder="username">
                 <input type="text" name="name" id="name" placeholder=" full name">

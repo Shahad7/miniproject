@@ -49,7 +49,7 @@
                 <div class="pad1">
                     <div class="books-block">
                         <div class="cus-flex">
-                            <img src="" alt="" class="src">
+                            <img id="book-image" src="" alt="" class="src">
                         </div>
                         <h4></h4>
                         <h5></h5>
@@ -77,11 +77,11 @@
             }
             return cookieValue;
         }
-    const csrftoken = getCookie('csrftoken');
+
 
     let row = document.querySelector('.cat-body-con')
     row.style.visibility = 'hidden'
-
+    let bookImage = document.getElementById('book-image')
     let searchButton =  document.querySelector('#searchButton')
     let bid;
     let input = document.querySelector('#search')
@@ -112,15 +112,21 @@
         if(flag==1)
         {
             h4.textContent = data[i].title;
+            h4.style.color = '#44476a'
             h5.textContent = `Author : ${data[i].author}`;
             p.textContent = `stock left : ${data[i].stock}`;
             row.style.visibility = 'visible';
+            bookImage.style.visibility = 'visible'
             rentButton.style.visibility = 'visible'
 
         }
         else{
-            row.style.visibility = 'visible';
+            row.style.visibility = 'visible'
+            bookImage.style.visibility = 'hidden'
             h4.textContent = "no such book :("
+            h4.style.color = '#cd0000'
+            h5.textContent = "";
+            p.textContent = "";
             rentButton.style.visibility = 'hidden'
         }
 
@@ -134,7 +140,7 @@
         method:'POST',
         headers: {
             'Content-Type' : 'application/json',
-            'X-CSRFToken' : csrftoken
+            'X-CSRFToken' : getCookie('csrftoken')
         },
         body:JSON.stringify({
             'bid':bid

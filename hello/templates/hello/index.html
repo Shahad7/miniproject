@@ -48,31 +48,38 @@
                 </div>
             </div>
             <div class="width5 form1">
-                <form action="{% url 'hello:index' %}" method="post" class="popup-form">
-                    {% csrf_token %} 
+                <form action="{% url 'hello:index' %}" id="loginForm" method="post" class="popup-form">
+                    {% csrf_token %}
                     <div style="display: flex;justify-content:space-between">
                         <h1 class="cus-h1">Login</h1>
                         <!-- <div class="close-btn" style="cursor: pointer;" onclick="closepopup()">&times;</div> -->
                     </div>
+                    <div id="login-error" style="margin-bottom:8px;color:red; 
+                     visibility: hidden;">
+                        Incorrect username or password</div>
+
                     <label style="font-style: normal;" for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Username" name="username" required><br>
+                    <input type="text" placeholder="Username" id="username" name="username" 
+                    onfocus="hideLoginError()" autocomplete = "off" 
+                    required><br>
         
                     <label style="font-style: normal;" for="password"><b>Password</b></label>
-                    <input type="password" placeholder="Password" name="password" required><br>
+                    <input type="password" placeholder="Password" id="password" 
+                    onfocus="hideLoginError()" name="password" required><br>
         
-                    <button type="submit" class="button">Submit</button><br>
+                    <button type="button" id="submitButton" class="button">Submit</button><br>
 
-                    <span style="text-align: center;margin-bottom: 5px;">
+                    <div>
                         Don't Have a account? <a 
                         href="{% url 'hello:signup' %}" 
-                        onclick="closeLogin();openSignUp()">Sign Up</a></span>
-                    <div><a href="{% url 'hello:libup' %}"> Sign Up</a> here if you're a Librarian</div>
+                        onclick="closeLogin();openSignUp()">Sign Up</a></div>
+                    <div style="margin-top:6px;"><a href="{% url 'hello:libup' %}"> Sign Up</a> here if you're a Librarian</div>
 
                     <div class="align1">
                         <img class="img3"  onclick="closeLogin()" 
                         src="{% static 'hello/images/xmark.png' %}">
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -126,6 +133,70 @@
             var blur= document.getElementById('Wrapper');
             blur.classList.toggle('active');    
         }
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    
+        const username = document.querySelector('#username')
+        const password = document.querySelector('#password')
+        const loginForm = document.getElementById('loginForm')
+        const submitButton = document.getElementById('submitButton')
+        const loginError = document.getElementById('login-error')
+
+        function hideLoginError(){
+            loginError.style.visibility = 'hidden'
+
+        }
+        submitButton.addEventListener('click',()=>{
+
+            fetch("http://127.0.0.1:8000/index",{
+            method:'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'X-CSRFToken' : getCookie('csrftoken')
+            },
+            body:JSON.stringify({
+                'username':username.value,
+                'password':password.value,
+            })
+            })
+            .then(response => response.json())
+            .then(data =>{
+                if(data['result']=='true')
+                {
+                    if(data['role']=='LIBRARIAN')
+                        location.assign("http://127.0.0.1:8000/librarian")
+                    else
+                    location.assign("http://127.0.0.1:8000/student")
+                }
+                else{
+                    loginError.style.visibility = 'visible'
+
+                }
+            
+            })
+            
+
+        })
+
+
+
+
+
+
     </script>
 </body>
 </html>

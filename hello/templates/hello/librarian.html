@@ -42,7 +42,7 @@
             onclick="closeAddBook()">
         </div>
         <div class="cus-grid">
-            <form action="{% url 'hello:librarian' %}" id="addbBook" method="post">
+            <form action="{% url 'hello:librarian' %}" autocomplete="off" id="addbBook" method="post">
             {% csrf_token %}
                 <input type="text" name="title" placeholder="Book Name">
                 <input type="text" name="author" id="author" placeholder="Author Name">

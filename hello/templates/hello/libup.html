@@ -11,7 +11,7 @@
 <body>
     <div class="f2-container">
         <div class="lib-container">
-            <form id="librarian-signup" action="{% url 'hello:libup' %}" method="post">
+            <form id="librarian-signup" autocomplete="off" action="{% url 'hello:libup' %}" method="post">
                 {% csrf_token %}
                 <input type="text" name="username" id="username" placeholder="username">
                 <input type="text" name="name" id="name" placeholder=" full name">

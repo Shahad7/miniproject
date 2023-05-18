@@ -11,17 +11,15 @@ def index(request):
     if request.method == "GET":      
         return render(request,'hello/index.html')
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+        data = json.loads(request.body.decode('utf-8'))
+        username = str(data['username'])
+        password = str(data['password'])
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            if(user.role=='LIBRARIAN'):
-                return HttpResponseRedirect(reverse('hello:librarian'))
-            else:
-                return HttpResponseRedirect(reverse('hello:student'))
+            return JsonResponse({"result":"true","role":user.role})   
         else:
-            return render(request,'hello/index.html')
+            return JsonResponse({"result":"false"})
 
 def student(request):
     if request.method == "GET":
@@ -46,7 +44,7 @@ def student(request):
 
 def logout_view(request):
     logout(request)
-    return render(request,'hello/index.html')
+    return HttpResponseRedirect(reverse('hello:index'))
 
 def librarian(request):
     if request.method == "GET":
@@ -119,6 +117,7 @@ def rent(request):
         book = Book.objects.get(pk=bid)
         book.stock -= 1
         book.save()
+    
 
 def mail(request):
     send_mail(
