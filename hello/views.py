@@ -134,3 +134,16 @@ def cron_view(request):
     return render(request,'hello/cron.html',{
         'count':cron.count
     })
+
+def duplicate(request,type,value):
+
+    if type == 'username':
+        if myuser.objects.filter(username=value).exists():
+            return JsonResponse({"result":"duplicate"})
+        else:
+            return JsonResponse({"result":"unique"})
+    else:
+        if Library.objects.filter(name=value).exists():
+            return JsonResponse({"result":"duplicate"})
+        else:
+            return JsonResponse({"result":"unique"})
