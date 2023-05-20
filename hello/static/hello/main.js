@@ -4,6 +4,7 @@ const duplicate = document.getElementById('duplicate')
 const submitButton = document.getElementById('singup-submit')
 let usernameDuplicate = false
 let libraryDuplicate = false
+const singupForm = document.getElementById('user-signup')
 
 const checkDuplicate = (element,type)=>{
     if(element!=undefined&&element!=null&&element!=""&&element.length!=0)
@@ -61,6 +62,37 @@ const checkDuplicate = (element,type)=>{
 
 username.addEventListener('input',()=>{checkDuplicate(username.value,'username')})
 library.addEventListener('input',()=>{checkDuplicate(library.value,'library')})
+
+const validateForm = (event)=>{
+    let emptyFields =  false;
+    ['username','name','email','password','library'].forEach((element)=>{
+        item = document.getElementById(element)
+        if(item!=undefined)
+        {
+            item.value = item.value.trim()
+            if(item.value == ""||item.value.length==0)
+                emptyFields =  true
+            
+        }
+    })
+    if(emptyFields==true)
+    {
+        duplicate.textContent = "fields can't be empty"
+        duplicate.style.visibility = 'visible'
+        event.preventDefault()
+    }
+    else
+    {
+        duplicate.textContent = ""
+        duplicate.style.visibility = 'hidden'
+        singupForm.submit()
+    }
+
+}
+
+singupForm.addEventListener('submit',(event)=>{
+     validateForm(event)
+})
 
 
 

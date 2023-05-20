@@ -375,19 +375,19 @@ header .img1{
 }
 
 
-#student-signup,#librarian-signup{
+#user-signup{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#student-signup select{
+#user-signup select{
     width:150px;
     height:30px;
     margin-bottom: 20px;
 
 }
-#student-signup input,#librarian-signup input{ 
+#user-signup input{ 
 
     border: solid white 4px;
     width: 300px;
@@ -401,7 +401,7 @@ header .img1{
     margin-bottom:20px;
 }
 
-#student-signup input[type="submit"],#librarian-signup input[type="submit"]{
+#user-signup input[type="submit"]{
     border-radius: 10px;
     border-style: none;
     background-color: #cd0000;
