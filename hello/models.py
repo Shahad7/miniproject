@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser,User
 class Book(models.Model):
     title = models.CharField(max_length = 64)
     author = models.CharField(max_length = 64)
+    photo = models.ImageField(upload_to="",null=True)
     stock = models.IntegerField(blank=True,null=True)
     libid = models.IntegerField(blank=True,null=True)
 

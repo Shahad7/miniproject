@@ -53,8 +53,9 @@ def librarian(request):
         title = request.POST["title"]
         author = request.POST["author"]
         stock = request.POST["stock"]
+        photo = request.FILES["image"]
         libid = request.user.libid
-        book = Book(title=title,author=author,stock=stock,libid=libid)
+        book = Book(title=title,author=author,photo=photo,stock=stock,libid=libid)
         book.save()
         return HttpResponseRedirect(reverse('hello:librarian'))
 
@@ -62,7 +63,9 @@ def delete(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         bid = int(data['bid'])
-        book = Book.objects.filter(id=bid)
+        book = Book.objects.get(id=bid)
+        if book.photo:
+            book.photo.delete()
         book.delete()
         return HttpResponseRedirect(reverse('hello:librarian'))
 

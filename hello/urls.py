@@ -1,6 +1,7 @@
 from . import views
 from django.urls import path
 
+
 app_name = 'hello'
 urlpatterns = [
     path('',views.index,name="index"),
@@ -17,3 +18,7 @@ urlpatterns = [
     path('student',views.student,name="student"),
     path('duplicate/<str:type>/<str:value>',views.duplicate,name="duplicate")
 ]
+
+"""if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)"""
