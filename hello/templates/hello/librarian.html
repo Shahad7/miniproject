@@ -21,9 +21,9 @@
     <!-- Main Contents -->
     <div class="cat-body-con" id="Wrapper">
         <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-1" onclick="openAddBook()">
+            <div class="col-md-4 col-sm-6 col-xs-1" style="order:1;" onclick="openAddBook()">
                 <div class="pad1">
-                    <div class="books-block add-book">
+                    <div class="books-block add-book" style="height:250px;">
                         <div class="cus-flex">
                             <img src="{% static 'hello/images/plus-solid.png' %}" alt="" class="src">
                         </div>
@@ -110,7 +110,8 @@
                     flex.classList.add('cus-flex')
                     let img = document.createElement('img')
                     img.classList.add('src')
-                    img.src = 'uploads/'+data[i].photo
+                    if(data[i].photo!=null&&data[i].photo!=undefined&&data[i].photo!="")
+                        img.src = 'uploads/'+data[i].photo
                     flex.appendChild(img)
                     let h4 = document.createElement('h4')
                     h4.textContent = data[i].title
@@ -149,9 +150,7 @@
                     row.appendChild(col)
                 }
             })
-
-            
-            
+           
         }
     </script>
 </body>

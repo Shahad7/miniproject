@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse,HttpResponseRedirect,HttpResponseForbidden,JsonResponse
 from django.urls import reverse
 from django.contrib.auth import login,logout,authenticate
 from .models import Book,myuser,Library,Rent
@@ -23,24 +23,15 @@ def index(request):
 
 def student(request):
     if request.method == "GET":
-        return render(request,'hello/student.html')
+        if request.user.is_authenticated:
+            if request.user.role == 'STUDENT':
+                return render(request,'hello/student.html')
+            else:
+                return HttpResponseForbidden()
+        else:
+            return HttpResponseForbidden()
 
     
-    
-"""def login_view(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request,username=username,password=password)
-        if user is not None:
-            login(request,user)
-            if(user.role=='LIBRARIAN'):
-                return HttpResponseRedirect(reverse('hello:index'))
-            else:
-                return HttpResponseRedirect(reverse('hello:library'))
-        else:
-            return render(request,'hello/login.html')
-    return render(request,'hello/login.html')"""
 
 def logout_view(request):
     logout(request)
@@ -48,12 +39,22 @@ def logout_view(request):
 
 def librarian(request):
     if request.method == "GET":
-        return render(request,'hello/librarian.html')
+        if request.user.is_authenticated:
+            if request.user.role == 'LIBRARIAN':
+                return render(request,'hello/librarian.html')
+            else:
+                return HttpResponseForbidden()
+        else:
+            return HttpResponseForbidden()
+        
     if request.method == "POST":
         title = request.POST["title"]
         author = request.POST["author"]
         stock = request.POST["stock"]
-        photo = request.FILES["image"]
+        if "image" in request.FILES:
+            photo = request.FILES["image"]
+        else:
+            photo = None
         libid = request.user.libid
         book = Book(title=title,author=author,photo=photo,stock=stock,libid=libid)
         book.save()

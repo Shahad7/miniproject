@@ -200,6 +200,7 @@ header .img1{
 
 .cat-body-con .row{
     margin: 10%;
+    margin-top: 3%;
 }
 
 .cat-body-con .pad1{
@@ -211,6 +212,7 @@ header .img1{
     background-color: #e6e7ee;
     display: block;
     text-align: center;
+    height: 387px;
     padding: 10%;
     box-shadow:  20px 20px 60px #b8b4b4;
     overflow-y: visible;
