@@ -21,7 +21,7 @@
     <!-- Main Contents -->
     <div class="cat-body-con" id="Wrapper">
         <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-1" style="order:1;" onclick="openAddBook()">
+            <div class="col-md-4 col-sm-6 col-xs-1" style="order:1;margin-top:50px;" onclick="openAddBook()">
                 <div class="pad1">
                     <div class="books-block add-book" style="height:250px;">
                         <div class="cus-flex">
@@ -113,24 +113,51 @@
                     if(data[i].photo!=null&&data[i].photo!=undefined&&data[i].photo!="")
                         img.src = 'uploads/'+data[i].photo
                     flex.appendChild(img)
-                    let h4 = document.createElement('h4')
+                    let h4 = document.createElement('div')
                     h4.textContent = data[i].title
-                    let h5 = document.createElement('h5')
+                    if(data[i].title.length>15)
+                        h4.style.fontSize = '16px'
+                    else if(data[i].title.length>30)
+                        h4.style.fontSize = '12px'
+                    else
+                        h4.style.fontSize = '24px'      
+                    h4.style.wordWrap = 'break-word'
+                    let h5 = document.createElement('div')
+                    h5.style.wordWrap = 'break-word'
+                    h5.style.fontSize = '20px'                    
                     h5.textContent = `Author : ${data[i].author}`
+                    h5.style.height = '20px'
                     let flex1 = document.createElement('div')
                     flex1.classList.add('flex1')
+                    flex1.style.marginTop = '5px'
                     let p = document.createElement('p')
                     p.textContent = `Stock Left : `
                     p.style.marginRight = '5px'
                     let input = document.createElement('input')
                     input.type = 'number'
-                    input.value = data[i].stock     
+                    input.value = data[i].stock
+                    input.min = '0'
+                    input.setAttribute('id',data[i].id)
+                    input.addEventListener('input',()=>{
+                        fetch("http://127.0.0.1:8000/update-stock",{
+                            method:'POST',
+                            headers: {
+                                'Content-Type' : 'application/json',
+                                'X-CSRFToken' : getCookie('csrftoken')
+                            },
+                            body:JSON.stringify({
+                                'bid': input.getAttribute('id'),
+                                'value':input.value
+                            })
+                        })
+                    })   
                     flex1.appendChild(p)
                     flex1.appendChild(input)
                     let b1 = document.createElement('button')
                     b1.classList.add('b1')
                     b1.textContent = "Delete"
                     b1.setAttribute('id',data[i].id)
+                    b1.style.marginTop = '5px'
                     b1.addEventListener('click',()=>{
                         fetch("http://127.0.0.1:8000/delete",{
                             method:'POST',
@@ -144,7 +171,27 @@
                         })
                         location.assign("http://127.0.0.1:8000/librarian")
                     })
-                    block.append(flex,h4,h5,flex1,b1)
+                    let b2 = document.createElement('button')
+                    b2.classList.add('b1')
+                    b2.textContent = "Update"
+                    b2.style.marginTop = '5px'
+                    b2.style.backgroundColor = '#65a30d'
+                    b2.setAttribute('id',data[i].id)
+                    b2.style.marginRight = '10px'
+                    b2.addEventListener('click',()=>{
+                        fetch("http://127.0.0.1:8000/update",{
+                            method:'POST',
+                            headers: {
+                                'Content-Type' : 'application/json',
+                                'X-CSRFToken' : getCookie('csrftoken')
+                            },
+                            body:JSON.stringify({
+                                'bid': b2.getAttribute('id')
+                            })
+                        })
+                        //location.assign("http://127.0.0.1:8000/librarian")
+                    })
+                    block.append(flex,h4,h5,flex1,b2,b1)
                     pad.appendChild(block)
                     col.appendChild(pad)
                     row.appendChild(col)

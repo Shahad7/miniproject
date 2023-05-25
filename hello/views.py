@@ -151,3 +151,14 @@ def duplicate(request,type,value):
             return JsonResponse({"result":"duplicate"})
         else:
             return JsonResponse({"result":"unique"})
+
+def updateStock(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        bid = int(data['bid'])
+        value = int(data['value'])
+        book = Book.objects.get(id=bid)
+        book.stock = value
+        book.save()
+        return HttpResponseRedirect(reverse('hello:librarian'))
+    
