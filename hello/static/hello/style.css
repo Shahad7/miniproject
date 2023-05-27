@@ -278,7 +278,7 @@ header .img1{
     text-align: center;
 } 
 
-.add-book-popup{
+.add-book-popup,.update-book-popup{
     display: block;
     gap: 10px;
     position: fixed;
@@ -298,16 +298,24 @@ header .img1{
     transition: transform 500ms ease-in-out;
 }
 
+.update-book-popup label{
+    margin-left: 5px;
+}
+
+.update-book-popup label[name='uimage-label']{
+    margin-left: 0;
+}
+
 /* .add-book-popup h4{
     margin-bottom: 25px;
 } */
 
-#addbBook{
+#addBookForm,#updateBookForm{
     display: grid;
     gap: 20px;
 }
 
-.add-book-popup input{
+.add-book-popup input,.update-book-popup input{
     height: 50px;
     border-radius: 10px;
     border-width: 0;
@@ -315,11 +323,11 @@ header .img1{
     padding: 8px;
 }
 
-.add-book-popup .blockv{
+.add-book-popup .blockv,.update-book-popup .blockv{
     display: none;
 }
 
-.add-book-popup label{
+.add-book-popup label,.update-book-popup label[name='uimage-label']{
     border-style: dashed;
     border-color: #e6e7ee;
     height: 50px;
@@ -327,24 +335,26 @@ header .img1{
     padding: 8px;
 }
 
-.add-book-popup button{
+
+
+.add-book-popup button,.update-book-popup button{
     height: 50px;
     border-radius: 10px;
     width: 50%;
 }
 
-.add-book-popup .cus-flex-btw{
+.add-book-popup .cus-flex-btw,.update-book-popup .cus-flex-btw{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
 }
 
-.add-book-popup .cus-flex-btw h4{
+.add-book-popup .cus-flex-btw h4,.update-book-popup .cus-flex-btw h4{
     margin: 0;
 }
 
-.add-book-popup .cus-flex-btw img{
+.add-book-popup .cus-flex-btw img,.update-book-popup .cus-flex-btw img{
     height: 35px;
     width: 22px;
     cursor: pointer;

@@ -44,25 +44,62 @@
         </div>
         <div class="cus-grid">
             <form action="{% url 'hello:librarian' %}" 
-            enctype="multipart/form-data" autocomplete="off" id="addbBook" method="post">
+            enctype="multipart/form-data" autocomplete="off" id="addBookForm" method="post">
             {% csrf_token %}
-                <input type="text" name="title" placeholder="Book Name">
+                <input type="text" name="title" id="title" placeholder="Book Name">
                 <input type="text" name="author" id="author" placeholder="Author Name">
                 <input type="number" name="stock" id="stock" placeholder="Number of items">
                 <label for="image">Image of the book</label>
                 <input type="file" class="blockv" name="image" id="image" placeholder="Image of the book">
-                <button for="addbBook">Submit</button>
+                <button for="addBookForm" id="addSubmit">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- update book details block -->
+    <div class="update-book-popup" id="updateBook">
+        <div class="cus-flex-btw">
+            <h4>Update book details</h4>
+            <img src="{% static 'hello/images/xmark.png' %}" alt="" class="src" 
+            onclick="closeUpdateBook()">
+        </div>
+        <div class="cus-grid">
+            <form action="{% url 'hello:update' %}" 
+            enctype="multipart/form-data" autocomplete="off" id="updateBookForm" method="post">
+            {% csrf_token %}
+                <label for="utitle">Book title</label>
+                <input type="text" name="utitle" id="utitle" placeholder="Book Name">
+                <label for="uauthor">Author</label>
+                <input type="text" name="uauthor" id="uauthor" placeholder="Author Name">
+                <label for="uimage" name="uimage-label" id="uimage-label">Image of the book</label>
+                <input type="file" class="blockv" name="uimage" id="uimage" placeholder="Image of the book">
+                <input type="hidden" name="ubid" id="ubid">
+                <button for="updateBookForm" id="updateSubmit">Submit</button>
             </form>
 
         </div>
     </div>
 
     <script>
+        const row = document.querySelector('.row')
+        const utitle = document.getElementById('utitle')
+        const uauthor = document.getElementById('uauthor')
+        const updateSubmit = document.getElementById('updateSubmit')
+        const addSubmit = document.getElementById('addSubmit')
+        const ubid = document.getElementById('ubid')
+        const uimage = document.getElementById('uimage')
+        const title = document.getElementById('title')
+        const author = document.getElementById('author')
+        const stock = document.getElementById('stock')
+        const imageLabel = document.getElementById('uimage-label')
+        
         function openAddBook(){
             let bookpopup=document.getElementById("addBook");
             bookpopup.classList.add("open-visibility");
             var blur= document.getElementById('Wrapper');
             blur.classList.toggle('active');
+            addSubmit.disabled = true
         }
 
         function closeAddBook(){
@@ -70,6 +107,16 @@
             bookpopup.classList.remove("open-visibility");
             var blur= document.getElementById('Wrapper');
             blur.classList.toggle('active');    
+        }
+
+        function openUpdateBook(){
+            let bookpopup=document.getElementById("updateBook");
+            bookpopup.classList.add("open-visibility");
+        }
+
+        function closeUpdateBook(){
+            let bookpopup=document.getElementById("updateBook");
+            bookpopup.classList.remove("open-visibility"); 
         }
 
         function getCookie(name) {
@@ -90,8 +137,6 @@
 
 
         function makeCards(){
-
-            const row = document.querySelector('.row')
 
             fetch("http://127.0.0.1:8000/retrieve")
             .then(response => response.json())
@@ -179,7 +224,9 @@
                     b2.setAttribute('id',data[i].id)
                     b2.style.marginRight = '10px'
                     b2.addEventListener('click',()=>{
-                        fetch("http://127.0.0.1:8000/update",{
+                        openUpdateBook()
+                        updateSubmit.disabled = true
+                        fetch("http://127.0.0.1:8000/retrieve2",{
                             method:'POST',
                             headers: {
                                 'Content-Type' : 'application/json',
@@ -188,6 +235,12 @@
                             body:JSON.stringify({
                                 'bid': b2.getAttribute('id')
                             })
+                        })
+                        .then(response => response.json())
+                        .then(data =>{
+                            utitle.value = data.title
+                            uauthor.value = data.author
+                            ubid.value = b2.getAttribute('id')
                         })
                         //location.assign("http://127.0.0.1:8000/librarian")
                     })
@@ -199,6 +252,34 @@
             })
            
         }
+
+        [utitle,uauthor].forEach((item)=>{
+            item.addEventListener('input',()=>{
+            if(utitle.value.trim().length!=0&&uauthor.value.trim().length!=0)
+                updateSubmit.disabled = false
+            else
+                updateSubmit.disabled = true
+            })
+        })
+
+        imageLabel.addEventListener('click',(e)=>{
+            e.stopPropagation()
+            if(utitle.value.trim().length!=0&&uauthor.value.trim().length!=0)
+                updateSubmit.disabled = false
+            else
+                updateSubmit.disabled = true
+        });
+        
+        [title,author,stock].forEach((item)=>{
+            item.addEventListener('input',()=>{
+            if(title.value.trim().length!=0&&author.value.trim().length!=0&&
+            stock.value.trim().length!=0)
+                addSubmit.disabled = false
+            else
+                addSubmit.disabled = true
+            })
+        })
+
     </script>
 </body>
 </html>

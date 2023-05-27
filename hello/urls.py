@@ -17,7 +17,9 @@ urlpatterns = [
     path('cron',views.cron_view,name="cron_view"),
     path('student',views.student,name="student"),
     path('duplicate/<str:type>/<str:value>',views.duplicate,name="duplicate"),
-    path('update-stock',views.updateStock,name="updateStock")
+    path('update-stock',views.updateStock,name="updateStock"),
+    path('retrieve2',views.retrieve2,name="retrieve2"),
+    path('update',views.update,name="update")
 ]
 
 """if settings.DEBUG:

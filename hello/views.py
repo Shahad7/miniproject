@@ -56,8 +56,17 @@ def librarian(request):
         else:
             photo = None
         libid = request.user.libid
-        book = Book(title=title,author=author,photo=photo,stock=stock,libid=libid)
-        book.save()
+        duplicates = Book.objects.filter(title=title)
+        for i in duplicates:
+            if i.author.lower()==author.lower():
+                existingBook = i
+                break
+        if existingBook:
+            existingBook.stock+=int(stock)
+            existingBook.save()
+        else:
+            book = Book(title=title,author=author,photo=photo,stock=stock,libid=libid)
+            book.save()         
         return HttpResponseRedirect(reverse('hello:librarian'))
 
 def delete(request):
@@ -161,4 +170,24 @@ def updateStock(request):
         book.stock = value
         book.save()
         return HttpResponseRedirect(reverse('hello:librarian'))
-    
+
+def retrieve2(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        bid = int(data['bid'])
+        book = Book.objects.get(id=bid)
+        return JsonResponse({"title":book.title,"author":book.author})
+
+def update(request):
+    if request.method == 'POST':
+        bid = request.POST['ubid'] 
+        book = Book.objects.get(id=bid)
+        book.title = request.POST['utitle']
+        book.author = request.POST['uauthor']
+        if 'uimage' in request.FILES:
+            if book.photo:
+                book.photo.delete()
+            book.photo = request.FILES['uimage']
+        book.save()
+        return HttpResponseRedirect(reverse('hello:librarian'))
+
