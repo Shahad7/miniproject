@@ -237,7 +237,7 @@ header .img1{
     margin-bottom: 10px;
 }
 
-.cat-body-con .pad1 .books-block .cus-flex img{
+.cat-body-con .pad1 .books-block .cus-flex img,#ordered-book{
     height: 145px;
     width: 130px;
 }

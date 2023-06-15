@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalogue | Library Management System</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'hello/images/book-solid.png' %}">
     <script src = "{% static 'hello/fuse.js' %}" defer></script>
 
     <!-- Bootstrap cdn -->
@@ -14,7 +15,7 @@
     <!-- CSS files -->
     <link rel="stylesheet" href="{% static 'hello/style.css' %}">
 </head>
-<body>
+<body onload="makeCards()">
     <header>
         <div class="main-bg cat-bg">
             <div class="header-sec cus-margin">
@@ -46,55 +47,7 @@
     <!-- Main Contents -->
     <div class="cat-body-con" id="Wrapper">
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="pad1">
-                    <div class="books-block cat">
-                        <div class="cus-flex">
-                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
-                        </div>
-                        <h4>Manthrikappoocha</h4>
-                        <h5>Author : Basheer</h5>
-                        <p>Stock Left : 3</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-1">
-                <div class="pad1">
-                    <div class="books-block cat">
-                        <div class="cus-flex">
-                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
-                        </div>
-                        <h4>Manthrikappoocha</h4>
-                        <h5>Author : Basheer</h5>
-                        <p>Stock Left : 3</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-1">
-                <div class="pad1">
-                    <div class="books-block cat">
-                        <div class="cus-flex">
-                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
-                        </div>
-                        <h4>Manthrikappoocha</h4>
-                        <h5>Author : Basheer</h5>
-                        <p>Stock Left : 3</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-1">
-                <div class="pad1">
-                    <div class="books-block cat">
-                        <div class="cus-flex">
-                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
-                        </div>
-                        <h4>Manthrikappoocha</h4>
-                        <h5>Author : Basheer</h5>
-                        <p>Stock Left : 3</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-1">
+       <!-- <div class="col-md-3 col-sm-6 col-xs-1">
                 <div class="pad1">
                     <div class="books-block cat" onclick="openRent()">
                         <div class="cus-flex">
@@ -105,17 +58,17 @@
                         <p>Stock Left : 3</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <!-- Rent-popup -->
     <div class="rent-popup" id="RentBook">
         <div class="popup-content">
-            <h4>Do you want to rent this book?</h4>
+            <h4 id="confirm-dialog"></h4>
             <div class="align2">
-                <button class="yes">Yes</button>
-                <button class="no">No</button>
+                <button onclick="confirmRent()" class="yes">Yes</button>
+                <button class="no" onclick="closeRent()">No</button>
             </div>
             <div class="align1">
                 <img class="img3"  onclick="closeRent()" 
@@ -131,15 +84,119 @@
                 <h3>Congratulation!</h3>
             </div>
             <div class="cus-flex">
-                <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
+                <img id="ordered-book" src="" alt="" class="src">
             </div>
             <div class="cus-flex">
-                <h5>Your order against Rent Id: LIB007 has been confirmed</h5>
+                <h5 id="confirmation-text"></h5>
             </div>
         </div>
     </div>
+
+    <!-- login form-->
+    <div class="chat-popup" id="loginForm">
+        <div class="flex-cus flexm scroll1">
+            <div class="block1 width5">
+                <img class="img1" src="{% static 'hello/images/popup-library.jpg' %}">
+                <div class="block1" style="margin-top: 20px;">
+                    <h3>Lorem ipsum<br></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
+                </div>
+            </div>
+            <div class="width5 form1">
+                <form action="{% url 'hello:index' %}" id="loginForm" method="post" class="popup-form">
+                    {% csrf_token %}
+                    <div style="display: flex;justify-content:space-between">
+                        <h1 class="cus-h1">Login</h1>
+                        <!-- <div class="close-btn" style="cursor: pointer;" onclick="closepopup()">&times;</div> -->
+                    </div>
+                    <div id="login-error" style="margin-bottom:8px;color:red; 
+                     visibility: hidden;">
+                        Incorrect username or password</div>
+
+                    <label style="font-style: normal;" for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Username" id="username" name="username" 
+                    onfocus="hideLoginError()" autocomplete = "off" 
+                    required><br>
+        
+                    <label style="font-style: normal;" for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Password" id="password" 
+                    onfocus="hideLoginError()" name="password" required><br>
+        
+                    <button type="button" id="submitButton" class="button">Submit</button><br>
+
+                    <div>
+                        Don't Have a account? <a 
+                        href="{% url 'hello:signup' %}" 
+                        onclick="closeLogin();openSignUp()">Sign Up</a></div>
+                    <!-- <div style="margin-top:6px;"><a href=""> Sign Up</a> here if you're a Librarian</div> -->
+
+                    <div class="align1">
+                        <img class="img3"  onclick="closeLogin()" 
+                        src="{% static 'hello/images/xmark.png' %}">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </body>
 <script>
+
+    //global 
+     let bookSelector;
+     let clicked = false;
+
+    //login form
+    function openLogin(){
+            let popup=document.getElementById("loginForm");
+            popup.classList.add("open-login");
+            var blur= document.getElementById('Wrapper');
+            blur.classList.toggle('active');
+        }
+
+    function closeLogin(){
+        let popup=document.getElementById("loginForm");
+        popup.classList.remove("open-login");
+        var blur= document.getElementById('Wrapper');
+        blur.classList.toggle('active');    
+    }
+
+    function hideLoginError(){
+            loginError.style.visibility = 'hidden'
+
+        }
+        submitButton.addEventListener('click',()=>{
+
+            fetch("http://127.0.0.1:8000/index",{
+            method:'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'X-CSRFToken' : getCookie('csrftoken')
+            },
+            body:JSON.stringify({
+                'username':username.value,
+                'password':password.value,
+            })
+            })
+            .then(response => response.json())
+            .then(data =>{
+                if(data['result']=='true')
+                {
+                    if(data['role']=='LIBRARIAN')
+                        location.assign("http://127.0.0.1:8000/librarian")
+                    else
+                    location.assign("http://127.0.0.1:8000/student")
+                }
+                else{
+                    loginError.style.visibility = 'visible'
+
+                }
+            
+            })
+            
+
+        })
+
     function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -171,14 +228,12 @@
     fetch("http://127.0.0.1:8000/retrieve")
     .then(response => response.json())
     .then(data =>{
-        console.log(data)
         const options = {
             includeScore : true,
             keys : ['title']                        
         }
         const fuse = new Fuse(data,options)
         let result = fuse.search(search)
-        console.log(result)
 
         for(i in result)
         {
@@ -193,13 +248,11 @@
     function addSearchResult(title,author,stock,photo,id){
        
         let col = document.createElement('div')
-        col.classList.add('col-md-4', 'col-sm-6','col-xs-12')
-        col.style.marginLeft = '150px'
-        col.style.width = '700px'
+        col.classList.add('col-md-3', 'col-sm-6','col-xs-1')
         let pad = document.createElement('div')
         pad.classList.add('pad1')
         let block = document.createElement('div')
-        block.classList.add('books-block')
+        block.classList.add('books-block','cat')
         let flex = document.createElement('div')
         flex.classList.add('cus-flex')
         let img = document.createElement('img')
@@ -216,11 +269,60 @@
         let p = document.createElement('p')
         p.textContent = `Stock Left : ${stock} `  
         flex1.appendChild(p)
-        let rentButton = document.createElement('button')
-        rentButton.classList.add('b1')
-        rentButton.textContent = "Rent"
-        rentButton.setAttribute('id',id)
-        rentButton.addEventListener('click',()=>{
+        block.setAttribute('id',id)
+        block.addEventListener('click',()=>{
+            openRent(id,title)
+        })
+
+        block.append(flex,h4,h5,flex1)
+        pad.appendChild(block)
+        col.appendChild(pad)
+        return col
+}
+       
+    function openRent(id,title){
+        let popup=document.getElementById("RentBook");
+        var blur= document.getElementById('Wrapper');
+        const dialog = document.getElementById('confirm-dialog')
+        if(!clicked)
+        {
+            fetch("http://127.0.0.1:8000/check-login")
+            .then(response => response.json())
+            .then(data =>{
+            if(data['status']=='true')
+            {
+                bookSelector = id
+                clicked = true
+                popup.classList.add("open-login"); 
+                blur.classList.toggle('active');
+                dialog.textContent = `Do you want to rent ${title}?`
+
+
+            }
+            else{
+                    openLogin()
+            }
+            })
+        }
+    }
+
+    function closeRent(){
+        let popup=document.getElementById("RentBook");
+        popup.classList.remove("open-login");
+        var blur= document.getElementById('Wrapper');
+        blur.classList.toggle('active');
+        clicked = false
+    }
+    
+    //rent confirmation
+    const rentConfirm = document.getElementById('RentConfirm')
+    const confirmationText = document.getElementById('confirmation-text')
+    const orderedBook = document.getElementById('ordered-book')
+    var blur= document.getElementById('Wrapper');
+    function confirmRent(){
+        closeRent()
+        blur.classList.toggle('active');
+        clicked = true
         fetch("http://127.0.0.1:8000/rent",{
         method:'POST',
         headers: {
@@ -228,30 +330,63 @@
             'X-CSRFToken' : getCookie('csrftoken')
         },
         body:JSON.stringify({
-            'bid':rentButton.getAttribute('id')
+            'bid':bookSelector
          })
         })
-    })
-        block.append(flex,h4,h5,flex1,rentButton)
-        pad.appendChild(block)
-        col.appendChild(pad)
-        return col
-}
-       
-    function openRent(){
-        let popup=document.getElementById("RentBook");
-        popup.classList.add("open-login");
-        var blur= document.getElementById('Wrapper');
-        blur.classList.toggle('active');
+        .then(response => response.json())
+        .then(data =>{ 
+            confirmationText.textContent = `Your order against Rent Id: LIB${data.rentID} has been confirmed`
+            rentConfirm.style.display = 'block'
+            orderedBook.src = 'uploads/'+data.photo
+        })
     }
 
-    function closeRent(){
-        let popup=document.getElementById("RentBook");
-        popup.classList.remove("open-login");
-        var blur= document.getElementById('Wrapper');
-        blur.classList.toggle('active');    
-    }
-    
+
+    function makeCards(){
+
+        fetch("http://127.0.0.1:8000/retrieve")
+        .then(response => response.json())
+        .then(data =>{
+        let flag = 0;
+        console.log(data)
+        for(i in data)
+        {
+            let col = document.createElement('div')
+            col.classList.add('col-md-3', 'col-sm-6','col-xs-1')
+            let pad = document.createElement('div')
+            pad.classList.add('pad1')
+            let block = document.createElement('div')
+            block.classList.add('books-block','cat')
+            let flex = document.createElement('div')
+            flex.classList.add('cus-flex')
+            let img = document.createElement('img')
+            img.classList.add('src')
+            if(data[i].photo!=null&&data[i].photo!=undefined&&data[i].photo!="")
+                img.src = 'uploads/'+data[i].photo
+            flex.appendChild(img)
+            let h4 = document.createElement('h4')      
+            h4.textContent = data[i].title
+            h4.setAttribute('id','book-title')
+            let h5 = document.createElement('h5')    
+            h5.textContent = `Author : ${data[i].author}`
+            let flex1 = document.createElement('div')
+            flex1.classList.add('flex1')
+            let p = document.createElement('p')
+            p.textContent = `Stock Left : ${data[i].stock}`
+            flex1.appendChild(p) 
+            let bid = data[i].id
+            block.append(flex,h4,h5,flex1)
+            block.addEventListener('click',()=>{
+                openRent(bid,h4.textContent)
+            })
+            pad.appendChild(block)
+            col.appendChild(pad)
+            document.querySelector('.row').appendChild(col)
+        }
+        })
+
+}
+
 
 </script>
 </html>

@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'hello/images/book-solid.png' %}">
     <title>Catalogue | Library Management System</title>
 
     <!-- Bootstrap cdn -->
@@ -15,9 +16,26 @@
     <link rel="stylesheet" href="{% static 'hello/style.css' %}">
 </head>
 <body onload="makeCards()">
-
-    <a style ="color:black; font-size :30px; margin-top:50px;margin-left: 1000px;
-                "href="{% url 'hello:logout' %}">Logout</a>
+    <header>
+        <div class="main-bg cat-bg">
+            <div class="header-sec cus-margin">
+                <img src="{% static 'hello/images/book-solid.png' %}">
+                <nav class="navbar">
+                    <a href="index.html">Home</a>
+                    <a>Catalogue</a>
+                    <a>Services</a>
+                    <a>Library Staffs</a>
+                    <a>Contact</a>
+                    <a href="{% url 'hello:logout' %}">Logout</a>
+                    <img class="img1" onclick="openLogin()" src="{% static 'hello/images/profile.png' %}">
+                </nav>
+            </div>
+            <div class="row1">
+                <h1>Catalogue</h1>
+            </div>
+        </div>
+    </header>
+    
     <!-- Main Contents -->
     <div class="cat-body-con" id="Wrapper">
         <div class="row">
