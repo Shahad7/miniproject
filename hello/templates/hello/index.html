@@ -11,29 +11,31 @@
     <link rel="stylesheet" href="{% static 'hello/style.css' %}">
 </head>
 <body>
-    <header>
-        <div class="main-bg">
-            <div class="header-sec cus-margin">
-                <img src="{% static 'hello/images/book-solid.png' %}">
-                <nav class="navbar">
-                    <a>Home</a>
-                    <a href="">Catalogue</a>
-                    <a>Services</a>
-                    <a>Library Staffs</a>
-                    <a>Contact</a>
-                    <img class="img1" onclick="openLogin()" 
-                    src="{% static 'hello/images/profile.png' %}">
-                </nav>
+    <div class="blurred" id="Wrapper">
+        <header>
+            <div class="main-bg">
+                <div class="header-sec cus-margin">
+                    <img src="{% static 'hello/images/book-solid.png' %}">
+                    <nav class="navbar">
+                        <a>Home</a>
+                        <a href="{% url 'hello:student' %}">Catalogue</a>
+                        <a>Services</a>
+                        <a>Library Staffs</a>
+                        <a>Contact</a>
+                        <img class="img1" onclick="openLogin()" 
+                        src="{% static 'hello/images/profile.png' %}">
+                    </nav>
+                </div>
+                <div class="row1">
+                    <h1>Library Management System</h1>
+                </div>
             </div>
-            <div class="row1">
-                <h1>Library Management System</h1>
+        </header>
+    
+        <!-- Main Contents -->
+        <div class="body-con">
+            <div class="">
             </div>
-        </div>
-    </header>
-
-    <!-- Main Contents -->
-    <div class="body-con">
-        <div class="">
         </div>
     </div>
 
@@ -43,7 +45,7 @@
             <div class="block1 width5">
                 <img class="img1" src="{% static 'hello/images/popup-library.jpg' %}">
                 <div class="block1" style="margin-top: 20px;">
-                    <h3>Lorem ipsu<br></h3>
+                    <h3>Lorem ipsum<br></h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
                 </div>
             </div>
@@ -73,13 +75,13 @@
                         Don't Have a account? <a 
                         href="{% url 'hello:signup' %}" 
                         onclick="closeLogin();openSignUp()">Sign Up</a></div>
-                    <div style="margin-top:6px;"><a href="{% url 'hello:libup' %}"> Sign Up</a> here if you're a Librarian</div>
+                    <!-- <div style="margin-top:6px;"><a href="{% url 'hello:libup' %}"> Sign Up</a> here if you're a Librarian</div> -->
 
                     <div class="align1">
                         <img class="img3"  onclick="closeLogin()" 
                         src="{% static 'hello/images/xmark.png' %}">
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -191,12 +193,6 @@
             
 
         })
-
-
-
-
-
-
     </script>
 </body>
 </html>

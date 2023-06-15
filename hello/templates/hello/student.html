@@ -36,7 +36,7 @@
                     <input type="text" id="search" name="search">
                     <button style = "background-color: red; border-style: none;
                     background-color: #cd0000;color: #ffffff;height: 40px;width: 80px;border-radius: 10px;"
-                    id="searchButton">search</button>
+                    id="searchButton">Search</button>
                 </div>
                 
             </div>
@@ -44,8 +44,99 @@
     </header>
 
     <!-- Main Contents -->
-    <div class="cat-body-con">
-        <div class="row"></div>
+    <div class="cat-body-con" id="Wrapper">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="pad1">
+                    <div class="books-block cat">
+                        <div class="cus-flex">
+                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
+                        </div>
+                        <h4>Manthrikappoocha</h4>
+                        <h5>Author : Basheer</h5>
+                        <p>Stock Left : 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="pad1">
+                    <div class="books-block cat">
+                        <div class="cus-flex">
+                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
+                        </div>
+                        <h4>Manthrikappoocha</h4>
+                        <h5>Author : Basheer</h5>
+                        <p>Stock Left : 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="pad1">
+                    <div class="books-block cat">
+                        <div class="cus-flex">
+                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
+                        </div>
+                        <h4>Manthrikappoocha</h4>
+                        <h5>Author : Basheer</h5>
+                        <p>Stock Left : 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="pad1">
+                    <div class="books-block cat">
+                        <div class="cus-flex">
+                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
+                        </div>
+                        <h4>Manthrikappoocha</h4>
+                        <h5>Author : Basheer</h5>
+                        <p>Stock Left : 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="pad1">
+                    <div class="books-block cat" onclick="openRent()">
+                        <div class="cus-flex">
+                            <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
+                        </div>
+                        <h4>Manthrikappoocha</h4>
+                        <h5>Author : Basheer</h5>
+                        <p>Stock Left : 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rent-popup -->
+    <div class="rent-popup" id="RentBook">
+        <div class="popup-content">
+            <h4>Do you want to rent this book?</h4>
+            <div class="align2">
+                <button class="yes">Yes</button>
+                <button class="no">No</button>
+            </div>
+            <div class="align1">
+                <img class="img3"  onclick="closeRent()" 
+                src="{% static 'hello/images/xmark.png' %}">
+            </div>
+        </div>
+    </div>
+
+    <!-- Rent confirmation popup -->
+    <div class="rent-confirm" id="RentConfirm">
+        <div class="popup-content">
+            <div class="cus-flex">
+                <h3>Congratulation!</h3>
+            </div>
+            <div class="cus-flex">
+                <img src="{% static 'hello/images/basheer.jpeg' %}" alt="" class="src">
+            </div>
+            <div class="cus-flex">
+                <h5>Your order against Rent Id: LIB007 has been confirmed</h5>
+            </div>
+        </div>
     </div>
 </body>
 <script>
@@ -147,6 +238,19 @@
         return col
 }
        
+    function openRent(){
+        let popup=document.getElementById("RentBook");
+        popup.classList.add("open-login");
+        var blur= document.getElementById('Wrapper');
+        blur.classList.toggle('active');
+    }
+
+    function closeRent(){
+        let popup=document.getElementById("RentBook");
+        popup.classList.remove("open-login");
+        var blur= document.getElementById('Wrapper');
+        blur.classList.toggle('active');    
+    }
     
 
 </script>

@@ -23,13 +23,8 @@ def index(request):
 
 def student(request):
     if request.method == "GET":
-        if request.user.is_authenticated:
-            if request.user.role == 'STUDENT':
-                return render(request,'hello/student.html')
-            else:
-                return HttpResponseForbidden()
-        else:
-            return HttpResponseForbidden()
+        if request.user.role == 'STUDENT':
+            return render(request,'hello/student.html')
 
     
 
