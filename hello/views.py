@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect,HttpResponseForbidden,JsonResponse
 from django.urls import reverse
 from django.contrib.auth import login,logout,authenticate
-from .models import Book,myuser,Library,Rent
+from .models import Book,myuser,Rent
 import json
 from django.core.mail import send_mail
 from . import cron
@@ -23,10 +23,8 @@ def index(request):
 
 def student(request):
     if request.method == "GET":
-        if request.user.role == 'STUDENT':
-            return render(request,'hello/student.html')
+        return render(request,'hello/student.html')
 
-    
 
 def logout_view(request):
     logout(request)
@@ -46,21 +44,21 @@ def librarian(request):
         title = request.POST["title"]
         author = request.POST["author"]
         stock = request.POST["stock"]
+        existingBook = ""
         if "image" in request.FILES:
             photo = request.FILES["image"]
         else:
             photo = None
-        libid = request.user.libid
         duplicates = Book.objects.filter(title=title)
         for i in duplicates:
             if i.author.lower()==author.lower():
                 existingBook = i
                 break
-        if existingBook:
+        if existingBook!="":
             existingBook.stock+=int(stock)
             existingBook.save()
         else:
-            book = Book(title=title,author=author,photo=photo,stock=stock,libid=libid)
+            book = Book(title=title,author=author,photo=photo,stock=stock)
             book.save()         
         return HttpResponseRedirect(reverse('hello:librarian'))
 
@@ -75,7 +73,7 @@ def delete(request):
         return HttpResponseRedirect(reverse('hello:librarian'))
 
 def retrieve(request):
-    return JsonResponse(list(Book.objects.all().filter(libid=request.user.libid).values()),safe=False)
+    return JsonResponse(list(Book.objects.all().values()),safe=False)
 
 def signup(request):
     if request.method == 'POST':
@@ -84,17 +82,14 @@ def signup(request):
         name = request.POST["name"]
         email = request.POST["email"]
         role = 'STUDENT' 
-        lid = int(request.POST["library"])
         user = myuser.objects.create_user(username=username,password=password,name=name,
-        email=email,role=role,libid=lid)
+        email=email,role=role)
         user.save()
         return HttpResponseRedirect(reverse("hello:index"))
     else:
-        return render(request,'hello/signup.html',{
-            'library':Library.objects.all()
-        })
+        return render(request,'hello/signup.html')
 
-def libup(request):
+"""def libup(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
@@ -110,7 +105,7 @@ def libup(request):
         user.save()
         return HttpResponseRedirect(reverse("hello:index"))
     else:
-        return render(request,'hello/libup.html')
+        return render(request,'hello/libup.html') """
 
 def rent(request):
     if request.method == 'POST':
@@ -125,6 +120,7 @@ def rent(request):
         book = Book.objects.get(pk=bid)
         book.stock -= 1
         book.save()
+        return JsonResponse({'rentID':ren.id,'photo':str(book.photo)})
     
 
 def mail(request):
@@ -150,11 +146,11 @@ def duplicate(request,type,value):
             return JsonResponse({"result":"duplicate"})
         else:
             return JsonResponse({"result":"unique"})
-    else:
+    """else:
         if Library.objects.filter(name=value).exists():
             return JsonResponse({"result":"duplicate"})
         else:
-            return JsonResponse({"result":"unique"})
+            return JsonResponse({"result":"unique"}) """
 
 def updateStock(request):
     if request.method == 'POST':
@@ -186,3 +182,8 @@ def update(request):
         book.save()
         return HttpResponseRedirect(reverse('hello:librarian'))
 
+def checkLogin(request):
+    if request.user.is_authenticated:
+        return JsonResponse({"status":"true"})
+    else:
+        return JsonResponse({"status":"false"})

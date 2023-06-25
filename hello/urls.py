@@ -11,7 +11,6 @@ urlpatterns = [
     path('logout',views.logout_view,name="logout"),
     path('signup',views.signup,name="signup"),
     path('librarian',views.librarian,name="librarian"),
-    path('libup',views.libup,name="libup"),
     path('rent',views.rent,name="rent"),
     path('mail',views.mail,name="mail"),
     path('cron',views.cron_view,name="cron_view"),
@@ -19,7 +18,8 @@ urlpatterns = [
     path('duplicate/<str:type>/<str:value>',views.duplicate,name="duplicate"),
     path('update-stock',views.updateStock,name="updateStock"),
     path('retrieve2',views.retrieve2,name="retrieve2"),
-    path('update',views.update,name="update")
+    path('update',views.update,name="update"),
+    path('check-login',views.checkLogin,name="checkLogin")
 ]
 
 """if settings.DEBUG:

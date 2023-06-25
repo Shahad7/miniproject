@@ -7,10 +7,6 @@ class Book(models.Model):
     author = models.CharField(max_length = 64)
     photo = models.ImageField(upload_to="",null=True)
     stock = models.IntegerField(blank=True,null=True)
-    libid = models.IntegerField(blank=True,null=True)
-
-class Library(models.Model):
-    name = models.CharField(max_length=100)
 
 class myuser(AbstractUser):
     user_types = (
@@ -20,7 +16,6 @@ class myuser(AbstractUser):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=255)
     role = models.CharField(max_length=100,choices=user_types,default='STUDENT')
-    libid = models.IntegerField(blank=True,null=True)
     USERNAME_FIELD = 'username'
 
 class Rent(models.Model):

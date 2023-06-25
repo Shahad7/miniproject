@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'hello/images/book-solid.png' %}">
     <title>Library Management System</title>
 
     <!-- CSS files -->
@@ -75,7 +76,7 @@
                         Don't Have a account? <a 
                         href="{% url 'hello:signup' %}" 
                         onclick="closeLogin();openSignUp()">Sign Up</a></div>
-                    <!-- <div style="margin-top:6px;"><a href="{% url 'hello:libup' %}"> Sign Up</a> here if you're a Librarian</div> -->
+                    <!-- <div style="margin-top:6px;"><a href=""> Sign Up</a> here if you're a Librarian</div> -->
 
                     <div class="align1">
                         <img class="img3"  onclick="closeLogin()" 
@@ -182,7 +183,7 @@
                     if(data['role']=='LIBRARIAN')
                         location.assign("http://127.0.0.1:8000/librarian")
                     else
-                    location.assign("http://127.0.0.1:8000/student")
+                        closeLogin()
                 }
                 else{
                     loginError.style.visibility = 'visible'
