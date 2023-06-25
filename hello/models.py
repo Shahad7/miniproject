@@ -23,5 +23,6 @@ class Rent(models.Model):
  #   sid = models.ForeignKey(myuser,on_delete=models.CASCADE)
     bid = models.IntegerField(blank=True,null=True)
     sid = models.IntegerField(blank=True,null=True)
+    dor = models.DateField(blank=True,null=True)
 
 
