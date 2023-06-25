@@ -89,11 +89,15 @@
             <div class="cus-flex">
                 <h5 id="confirmation-text"></h5>
             </div>
+            <div class="align1">
+                <img class="img3"  onclick="closeRentC()" 
+                src="{% static 'hello/images/xmark.png' %}">
+            </div>
         </div>
     </div>
 
     <!-- login form-->
-    <div class="chat-popup" id="loginForm">
+    <div class="chat-popup cus-len" id="loginForm">
         <div class="flex-cus flexm scroll1">
             <div class="block1 width5">
                 <img class="img1" src="{% static 'hello/images/popup-library.jpg' %}">
@@ -309,6 +313,14 @@
     function closeRent(){
         let popup=document.getElementById("RentBook");
         popup.classList.remove("open-login");
+        var blur= document.getElementById('Wrapper');
+        blur.classList.toggle('active');
+        clicked = false
+    }
+
+    function closeRentC(){
+        let popup=document.getElementById("RentConfirm");
+        popup.style.display = 'none';
         var blur= document.getElementById('Wrapper');
         blur.classList.toggle('active');
         clicked = false

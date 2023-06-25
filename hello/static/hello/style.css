@@ -144,6 +144,10 @@ header .img1{
 	padding: 3%;
 }
 
+.cus-len{
+    height: 61% !important;
+}
+
 .chat-popup .flex-cus{
 	display: flex;
 	justify-content: center;
@@ -237,7 +241,7 @@ header .img1{
     margin-bottom: 10px;
 }
 
-.cat-body-con .pad1 .books-block .cus-flex img,#ordered-book{
+.cat-body-con .pad1 .books-block .cus-flex img{
     height: 145px;
     width: 130px;
 }
@@ -520,6 +524,77 @@ header .img1{
 .rent-confirm .popup-content{
     display: block;
 }
+
+.rent-confirm .img3{
+    height: 30px;
+    width: 19px;
+    cursor: pointer;
+}
+
+.rent-confirm .align1{
+    position: absolute;
+    padding: 4px 5px 1px 4px;
+    top: 5px;
+    right: 10px;
+    z-index: 9999;
+}
+
+.rent-confirm .popup-content .cus-flex h5{
+    margin-top: 15px;
+}
+
+.profile-sidebar{
+    display: block;
+    position: fixed;
+    top: 5%;
+    left: 73%;
+    right: 2%;
+    background-color: #ffffff;
+    z-index: 999;
+    transition: 1s;
+    border-radius: 10px;
+    height: 80%;
+	padding: 2%;
+    text-align: center;
+    overflow: auto;
+}
+
+.profile-sidebar .popup-content{
+    display: block;
+}
+
+.profile-sidebar .popup-content .cus-flex .img4{
+    height: 30%;
+    width: 30%;
+}
+
+.profile-sidebar .popup-content h5{
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-sidebar .popup-content .table-body{
+    display: block;
+    height: 80%;
+    overflow-y: auto;
+    overflow: overlay;
+}
+
+.profile-sidebar .popup-content tr,th,td{
+    border-bottom: 0.5px solid #44476a;
+    border-collapse: collapse;
+    height: 50px;
+}
+
+.profile-sidebar .popup-content tr p{
+    background-color: #cd0000;
+    color: #ffffff;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-size: 15px;
+}
+
 
 .open-login{
 	display: block;
