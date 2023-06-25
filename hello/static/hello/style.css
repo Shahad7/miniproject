@@ -544,7 +544,7 @@ header .img1{
 }
 
 .profile-sidebar{
-    display: block;
+    display: none;
     position: fixed;
     top: 5%;
     left: 73%;

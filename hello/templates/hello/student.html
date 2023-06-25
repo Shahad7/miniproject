@@ -271,11 +271,22 @@
         let flex1 = document.createElement('div')
         flex1.classList.add('flex1')
         let p = document.createElement('p')
-        p.textContent = `Stock Left : ${stock} `  
+
+        //handling unavailable items
+        if(stock>0)
+            p.textContent = `Stock Left : ${stock} `  
+        else{
+            p.textContent = 'unavailable'
+            col.style.filter = 'grayscale(1)'
+        }
         flex1.appendChild(p)
         block.setAttribute('id',id)
-        block.addEventListener('click',()=>{
-            openRent(id,title)
+        block.addEventListener('click',(e)=>{
+            if (stock > 0)
+                openRent(id, h4.textContent)
+            else {
+                e.preventDefault()
+            }
         })
 
         block.append(flex,h4,h5,flex1)
@@ -324,6 +335,7 @@
         var blur= document.getElementById('Wrapper');
         blur.classList.toggle('active');
         clicked = false
+        location.assign("http://127.0.0.1:8000/student")
     }
     
     //rent confirmation
@@ -360,7 +372,6 @@
         .then(response => response.json())
         .then(data =>{
         let flag = 0;
-        console.log(data)
         for(i in data)
         {
             let col = document.createElement('div')
@@ -384,12 +395,24 @@
             let flex1 = document.createElement('div')
             flex1.classList.add('flex1')
             let p = document.createElement('p')
-            p.textContent = `Stock Left : ${data[i].stock}`
+
+            //handling unavailable items
+            if (data[i].stock > 0)
+                p.textContent = `Stock Left : ${data[i].stock} `
+            else {
+                p.textContent = 'unavailable'
+                col.style.filter = 'grayscale(1)'
+            }
             flex1.appendChild(p) 
             let bid = data[i].id
+            let stock = data[i].stock
             block.append(flex,h4,h5,flex1)
-            block.addEventListener('click',()=>{
-                openRent(bid,h4.textContent)
+            block.addEventListener('click',(e)=>{
+                if(stock>0)
+                    openRent(bid,h4.textContent)
+                else{
+                    e.preventDefault()
+                }
             })
             pad.appendChild(block)
             col.appendChild(pad)

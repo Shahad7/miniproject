@@ -9,7 +9,7 @@ class userAdmin(admin.ModelAdmin):
 class LibraryAdmin(admin.ModelAdmin):
     list_display = ("id","name")
 class RentAdmin(admin.ModelAdmin):
-    list_display = ("bid","sid")
+    list_display = ("id","bid","sid")
 
 admin.site.register(Book,BookAdmin)
 admin.site.register(myuser,userAdmin)
