@@ -124,7 +124,7 @@
 
     <!-- profile sidebar -->
     <!-- popup signup/login -->
-    <div class="profile-sidebar" id="loginForm">
+    <div class="profile-sidebar" id="sidebar">
         <div class="popup-content">
             <div class="cus-flex">
                 <img class="img4" src="{% static 'hello/images/profile-g.png' %}" alt="">
@@ -169,19 +169,34 @@
             </section>
             <p>Fine is given by adding 150rs for each week exceeding from DOR(date of return)</p>
             <div class="align1">
-                <img class="img3"  onclick="" 
+                <img id="close-sidebar" class="img3"  onclick="" 
                 src="{% static 'hello/images/xmark.png' %}">
             </div>
         </div>
     </div>
 
     <script>
-        function openLogin(){
-            let popup=document.getElementById("loginForm");
-            popup.classList.add("open-login");
-            var blur= document.getElementById('Wrapper');
-            blur.classList.toggle('active');
-        }
+        function openLogin(e) {
+                let popup = document.getElementById("loginForm");
+                var blur = document.getElementById('Wrapper');
+                const sidebar = document.getElementById('sidebar')
+                fetch("http://127.0.0.1:8000/check-login")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data['status'] == 'true') {
+                            sidebar.style.display = 'block'
+                        }
+                        else {
+                            popup.classList.add("open-login");
+                            blur.classList.toggle('active');
+                        }
+                    })
+            }
+        const closeSidebarButton = document.getElementById('close-sidebar')
+        closeSidebarButton.addEventListener('click', () => {
+            sidebar.style.display = 'none'
+        })
+
 
         function closeLogin(){
             let popup=document.getElementById("loginForm");

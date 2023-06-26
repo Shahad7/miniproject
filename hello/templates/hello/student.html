@@ -145,12 +145,64 @@
     </div>
 
     <!-- stock empty message -->
-    <div class="stock" id="RentBook">
+    <div class="stock" id="emptyStock">
         <div class="popup-content">
-            <h4>The GOT is currently out of stock</h4>
+            <h4 id="stock-dialog"></h4>
             <div class="align1">
-                <img class="img3" 
+                <img onclick="closeEmpty()" id="close-empty-stock" class="img3" 
                 src="{% static 'hello/images/xmark.png' %}">
+            </div>
+        </div>
+    </div>
+
+    <!-- profile sidebar -->
+    <!-- popup signup/login -->
+    <div class="profile-sidebar" id="sidebar">
+        <div class="popup-content">
+            <div class="cus-flex">
+                <img class="img4" src="{% static 'hello/images/profile-g.png' %}" alt="">
+            </div>
+            <h5>Lexi</h5>
+            <p style="text-decoration: underline;">Book Rent Details</p>
+            <section class="table-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Id</th>
+                            <th style="width: 65%;">Name</th>
+                            <th style="width: 25%;">DOR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LIB49</td>
+                            <td>GOT</td>
+                            <td>12/7/23</td>
+                        </tr>
+                        <tr>
+                            <td>LIB49</td>
+                            <td>GOT</td>
+                            <td>
+                                24/6/23
+                                <p>Fine: 150</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>LIB49</td>
+                            <td>GOT</td>
+                            <td>12/7/23</td>
+                        </tr>
+                        <tr>
+                            <td>LIB49</td>
+                            <td>GOT</td>
+                            <td>12/7/23</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            <p>Fine is given by adding 150rs for each week exceeding from DOR(date of return)</p>
+            <div class="align1">
+                <img id="close-sidebar" class="img3" onclick="" src="{% static 'hello/images/xmark.png' %}">
             </div>
         </div>
     </div>
@@ -163,11 +215,24 @@
      let clicked = false;
 
     //login form
-    function openLogin(){
+    
+    function openLogin(e){
             let popup=document.getElementById("loginForm");
-            popup.classList.add("open-login");
-            var blur= document.getElementById('Wrapper');
-            blur.classList.toggle('active');
+            var blur = document.getElementById('Wrapper');
+            const sidebar = document.getElementById('sidebar')
+            fetch("http://127.0.0.1:8000/check-login")
+            .then(response => response.json())
+            .then(data => {
+                if (data['status'] == 'true') {  
+                    sidebar.style.display = 'block'
+                }
+                else{                  
+                    popup.classList.add("open-login");
+                    blur.classList.toggle('active');
+                }
+            })
+
+            
         }
 
     function closeLogin(){
@@ -176,6 +241,11 @@
         var blur= document.getElementById('Wrapper');
         blur.classList.toggle('active');    
     }
+
+    const closeSidebarButton = document.getElementById('close-sidebar')
+    closeSidebarButton.addEventListener('click',()=>{
+        sidebar.style.display = 'none'
+    })
 
     function hideLoginError(){
             loginError.style.visibility = 'hidden'
@@ -289,7 +359,7 @@
             p.textContent = `Stock Left : ${stock} `  
         else{
             p.textContent = 'unavailable'
-            col.style.filter = 'grayscale(1)'
+            col.style.filter = 'contrast(0.6)'
         }
         flex1.appendChild(p)
         block.setAttribute('id',id)
@@ -297,7 +367,12 @@
             if (stock > 0)
                 openRent(id, h4.textContent)
             else {
-                e.preventDefault()
+                clicked = true
+                emptyStockPopup.style.display = 'block'
+                emptyStockDialog.textContent = `${title} is currently out of stock`
+                var blur = document.getElementById('Wrapper');
+                blur.classList.toggle('active');
+
             }
         })
 
@@ -379,6 +454,9 @@
     }
 
 
+    const emptyStockPopup = document.getElementById('emptyStock')
+    const emptyStockDialog = document.getElementById('stock-dialog')
+    const closeEmptyStock = document.getElementById('close-empty-stock')
     function makeCards(){
 
         fetch("http://127.0.0.1:8000/retrieve")
@@ -414,17 +492,23 @@
                 p.textContent = `Stock Left : ${data[i].stock} `
             else {
                 p.textContent = 'unavailable'
-                col.style.filter = 'grayscale(1)'
+                col.style.filter = 'contrast(0.6)'
             }
             flex1.appendChild(p) 
             let bid = data[i].id
             let stock = data[i].stock
+            let title = data[i].title
             block.append(flex,h4,h5,flex1)
             block.addEventListener('click',(e)=>{
                 if(stock>0)
                     openRent(bid,h4.textContent)
                 else{
-                    e.preventDefault()
+                    clicked = true
+                    emptyStockPopup.style.display = 'block'
+                    emptyStockDialog.textContent = `${title} is currently out of stock`
+                    var blur = document.getElementById('Wrapper');
+                    blur.classList.toggle('active');
+
                 }
             })
             pad.appendChild(block)
@@ -433,6 +517,13 @@
         }
         })
 
+}
+
+function closeEmpty(){
+    var blur = document.getElementById('Wrapper');
+    blur.classList.toggle('active');
+    emptyStockPopup.style.display = 'none'
+    clicked = false
 }
 
 

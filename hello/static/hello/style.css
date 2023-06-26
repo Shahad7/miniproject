@@ -615,7 +615,7 @@ header .img1{
 }
 
 .stock{
-    display: block;
+    display: none;
     position: fixed;
     top: 33%;
     left: 25%;
