@@ -21,13 +21,13 @@
             <div class="header-sec cus-margin">
                 <img src="{% static 'hello/images/book-solid.png' %}">
                 <nav class="navbar">
-                    <a href="index.html">Home</a>
-                    <a>Catalogue</a>
+                    <a href="{% url 'hello:index' %}">Home</a>
+                    <a href="{% url 'hello:catalogue' %}">Catalogue</a>
                     <a>Services</a>
                     <a>Library Staffs</a>
                     <a>Contact</a>
                     <a href="{% url 'hello:logout' %}">Logout</a>
-                    <img class="img1" onclick="openLogin()" src="{% static 'hello/images/profile.png' %}">
+                    <img class="img1" onclick="redirectToBoard()" src="{% static 'hello/images/profile.png' %}">
                 </nav>
             </div>
             <div class="row1">
@@ -152,7 +152,10 @@
             }
             return cookieValue;
         }
-
+        
+        function redirectToBoard(){
+            location.assign("http://127.0.0.1:8000/dashboard")
+        }
 
         function makeCards(){
 
@@ -160,7 +163,6 @@
             .then(response => response.json())
             .then(data =>{
                 let flag = 0;
-                console.log(data)
                 for(i in data)
                 {
                     let col = document.createElement('div')

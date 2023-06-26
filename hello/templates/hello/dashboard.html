@@ -11,7 +11,7 @@
     <!-- CSS files -->
     <link rel="stylesheet" href="{% static 'hello/style.css' %}">
 </head>
-<body>
+<body onload="addContents()">
     <div class="blurred" id="Wrapper">
         <header>
             <div class="main-bg dash-bg">
@@ -19,10 +19,11 @@
                     <img src="{% static 'hello/images/book-solid.png' %}">
                     <nav class="navbar">
                         <a href="{% url 'hello:index' %}">Home</a>
-                        <a href="{% url 'hello:student' %}">Catalogue</a>
+                        <a href="{% url 'hello:catalogue' %}">Catalogue</a>
                         <a>Services</a>
                         <a>Library Staffs</a>
                         <a>Contact</a>
+                        <a href="{% url 'hello:logout' %}">Logout</a>
                         <img class="img1" onclick="openLogin()" 
                         src="{% static 'hello/images/profile.png' %}">
                     </nav>
@@ -47,8 +48,8 @@
                             <th style="width: 10%;">Fine</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="table-body">
+                        <!--<tr>
                             <td>1</td>
                             <td>LIB07</td>
                             <td>GOT</td>
@@ -71,13 +72,52 @@
                             <td>Lexi</td>
                             <td>13/6/23</td>
                             <td>300</td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
 
-    
+<script>
+    const tableBody = document.getElementById('table-body')
+    function addContents(){
+        fetch("http://127.0.0.1:8000/fetch-dashboard-contents")
+        .then(response => response.json())
+        .then(data =>{
+            let rents = data['rents']
+            if(rents.length!=0)
+            {
+                tableBody.replaceChildren()
+                let i = 0
+                for (rent of rents) {
+                    let row = document.createElement('tr')
+                    let no = document.createElement('td')
+                    no.textContent = i++
+                    let id = document.createElement('td')
+                    id.textContent = 'LIB' + rent.id
+                    let title = document.createElement('td')
+                    title.textContent = rent.title
+                    let user = document.createElement('td')
+                    user.textContent = rent.user
+                    let dor = document.createElement('td')
+                    let [x, y, z] = rent.dor.split('-')
+                    let date = z + '/' + y + '/' + x.substring(2)
+                    dor.textContent = date           
+                    let fine = document.createElement('td')
+                    fine.textContent = rent.fine                     
+                    row.append(no,id, title, user, dor, fine)
+                    tableBody.appendChild(row)
+                }
+            }
+        
+        })
+    }
+
+
+
+</script>
+
 </body>
+
 </html>

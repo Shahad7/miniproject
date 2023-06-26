@@ -23,7 +23,7 @@
                 <img src="{% static 'hello/images/book-solid.png' %}">
                 <nav class="navbar">
                     <a href="{% url 'hello:index' %}">Home</a>
-                    <a>Catalogue</a>
+                    <a href="{% url 'hello:catalogue' %}">Catalogue</a>
                     <a>Services</a>
                     <a>Library Staffs</a>
                     <a>Contact</a>
@@ -225,9 +225,16 @@
             fetch("http://127.0.0.1:8000/check-login")
             .then(response => response.json())
             .then(data => {
-                if (data['status'] == 'true') {  
-                    sidebar.style.display = 'block'
-                    addSidebarContent()
+                if (data['status'] == 'true') {
+                    if (data['role'] == 'librarian')
+                    {
+                        location.assign("http://127.0.0.1:8000/dashboard")
+                        
+                    }
+                    else {
+                        sidebar.style.display = 'block'
+                        addSidebarContent()
+                    }
                 }
                 else{                  
                     popup.classList.add("open-login");
@@ -256,6 +263,7 @@
 
                     }
                     else {
+                        tableBody.replaceChildren()
                         for (rent of rents) {
                             let row = document.createElement('tr')
 

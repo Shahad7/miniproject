@@ -201,7 +201,7 @@ def update(request):
 
 def checkLogin(request):
     if request.user.is_authenticated:
-        return JsonResponse({"status": "true"})
+        return JsonResponse({"status": "true", "role": request.user.role})
     else:
         return JsonResponse({"status": "false"})
 
@@ -211,7 +211,7 @@ def dashboard(request):
 
 
 def fetchRentDetails(request):
-    user = request.user.username
+    user = request.user.name
     sid = request.user.id
     rents = list(Rent.objects.filter(sid=sid).values())
     data = []
@@ -220,3 +220,20 @@ def fetchRentDetails(request):
             id=rent['bid']).title, 'fine': rent['fine'], 'dor': rent['dor']}
         data.append(elt)
     return JsonResponse({"user": user, "rents": data})
+
+
+def catalogue(request):
+    if request.user.is_authenticated and request.user.role == 'LIBRARIAN':
+        return render(request, 'hello/librarian.html')
+    else:
+        return render(request, 'hello/student.html')
+
+
+def fetchDashBoardContent(request):
+    rents = list(Rent.objects.all().values())
+    data = []
+    for rent in rents:
+        elt = {'id': rent['id'], 'user': myuser.objects.get(id=rent['sid']).name, 'title': Book.objects.get(
+            id=rent['bid']).title, 'fine': rent['fine'], 'dor': rent['dor']}
+        data.append(elt)
+    return JsonResponse({"rents": data})

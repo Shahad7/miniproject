@@ -177,8 +177,12 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data['status'] == 'true') {
-                            sidebar.style.display = 'block'
-                            addSidebarContent()
+                            if(data['role']=='LIBRARIAN')
+                                location.assign("http://127.0.0.1:8000/dashboard")
+                            else{
+                                sidebar.style.display = 'block'
+                                addSidebarContent()
+                            }
                         }
                         else {
                             popup.classList.add("open-login");
@@ -210,6 +214,7 @@
 
                     }
                     else{
+                        tableBody.replaceChildren()
                         for(rent of rents){
                             let row = document.createElement('tr')
 

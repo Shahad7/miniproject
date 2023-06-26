@@ -22,7 +22,10 @@ urlpatterns = [
     path('update', views.update, name="update"),
     path('check-login', views.checkLogin, name="checkLogin"),
     path('dashboard', views.dashboard, name="dashboard"),
-    path('fetch-rent-details', views.fetchRentDetails, name="fetchRentDetails")
+    path('fetch-rent-details', views.fetchRentDetails, name="fetchRentDetails"),
+    path('catalogue', views.catalogue, name="catalogue"),
+    path('fetch-dashboard-contents', views.fetchDashBoardContent,
+         name="fetchDashBoardContent")
 ]
 
 """if settings.DEBUG:
