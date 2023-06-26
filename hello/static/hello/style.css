@@ -595,6 +595,49 @@ header .img1{
     font-size: 15px;
 }
 
+.profile-sidebar .img3{
+    height: 30px;
+    width: 19px;
+    cursor: pointer;
+}
+
+.profile-sidebar .align1{
+    position: absolute;
+    padding: 4px 5px 1px 4px;
+    top: 5px;
+    right: 10px;
+    z-index: 9999;
+}
+
+.stock{
+    display: block;
+    position: fixed;
+    top: 33%;
+    left: 25%;
+    right: 25%;
+    bottom: 15%;
+    background-color: #ffffff;
+    z-index: 999;
+    transition: 1s;
+    border-radius: 10px;
+    overflow: auto;
+    height: fit-content;
+	padding: 3%;
+}
+
+.stock .img3{
+    height: 30px;
+    width: 19px;
+    cursor: pointer;
+}
+
+.stock .align1{
+    position: absolute;
+    padding: 4px 5px 1px 4px;
+    top: 5px;
+    right: 10px;
+    z-index: 9999;
+}
 
 .open-login{
 	display: block;
