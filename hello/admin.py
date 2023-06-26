@@ -17,7 +17,7 @@ class LibraryAdmin(admin.ModelAdmin):
 
 
 class RentAdmin(admin.ModelAdmin):
-    list_display = ("id", "bid", "sid", "dor")
+    list_display = ("id", "bid", "sid", "dor", "fine")
 
 
 admin.site.register(Book, BookAdmin)

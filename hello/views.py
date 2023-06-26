@@ -205,5 +205,18 @@ def checkLogin(request):
     else:
         return JsonResponse({"status": "false"})
 
+
 def dashboard(request):
-    return render(request,'hello/dashboard.html')
+    return render(request, 'hello/dashboard.html')
+
+
+def fetchRentDetails(request):
+    user = request.user.username
+    sid = request.user.id
+    rents = list(Rent.objects.filter(sid=sid).values())
+    data = []
+    for rent in rents:
+        elt = {'id': rent['id'], 'title': Book.objects.get(
+            id=rent['bid']).title, 'fine': rent['fine'], 'dor': rent['dor']}
+        data.append(elt)
+    return JsonResponse({"user": user, "rents": data})

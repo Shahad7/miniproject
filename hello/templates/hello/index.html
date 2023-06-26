@@ -125,12 +125,12 @@
     <!-- profile sidebar -->
     <!-- popup signup/login -->
     <div class="profile-sidebar" id="sidebar">
-        <div class="popup-content">
+        <div class="popup-content" id="sidebar-content">
             <div class="cus-flex">
                 <img class="img4" src="{% static 'hello/images/profile-g.png' %}" alt="">
             </div>
-            <h5>Lexi</h5>
-            <p style="text-decoration: underline;">Book Rent Details</p>
+            <h5 id="sidebar-username"></h5>
+            <p id="table-title" style="text-decoration: underline;">Book Rent Details</p>
             <section class="table-body">
                 <table>
                     <thead>
@@ -140,8 +140,8 @@
                             <th style="width: 25%;">DOR</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="table-content">
+                      <!-- <tr>
                             <td>LIB49</td>
                             <td>GOT</td>
                             <td>12/7/23</td>
@@ -153,17 +153,17 @@
                                 24/6/23
                                 <p>Fine: 150</p>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </section>
-            <p>Fine is given by adding 150rs for each week exceeding from DOR(date of return)</p>
+            <p id="sidebar-notice">Fine is given by adding 150rs for each week exceeding from DOR(date of return)</p>
             <div class="align1">
                 <img id="close-sidebar" class="img3"  onclick="" 
                 src="{% static 'hello/images/xmark.png' %}">
             </div>
             <div class="cus-flex">
-                <button class="b1">Log Out</button>
+                <button onclick="logoutUser()" class="b1">Log Out</button>
             </div>
         </div>
     </div>
@@ -178,6 +178,7 @@
                     .then(data => {
                         if (data['status'] == 'true') {
                             sidebar.style.display = 'block'
+                            addSidebarContent()
                         }
                         else {
                             popup.classList.add("open-login");
@@ -190,6 +191,48 @@
             sidebar.style.display = 'none'
         })
 
+        function addSidebarContent() {
+            const sidebarUsername =  document.getElementById('sidebar-username')
+            const table = document.querySelector('.table-body')
+            const tableBody = document.getElementById('table-content')
+            const tableTitle = document.getElementById('table-title')
+            fetch("http://127.0.0.1:8000/fetch-rent-details")
+                .then(response => response.json())
+                .then(data => {
+                    sidebarUsername.textContent = data['user']
+                    let rents = data['rents']
+                    if(rents.length==0)
+                    {
+                        table.style.display = 'none'
+                        let noRentDialog = document.createElement('h4')
+                        noRentDialog.textContent = 'You have no rents'
+                        tableTitle.parentNode.insertBefore(noRentDialog, tableTitle.nextSibling);
+
+                    }
+                    else{
+                        for(rent of rents){
+                            let row = document.createElement('tr')
+
+                            let id = document.createElement('td')
+                            id.textContent = 'LIB'+rent.id
+                            let title = document.createElement('td')
+                            title.textContent = rent.title
+                            let dor = document.createElement('td')
+                            let [x,y,z] = rent.dor.split('-')
+                            let date = z+'/'+y+'/'+x.substring(2)
+                            dor.textContent = date
+                            if(rent.fine>0){
+                                let fine = document.createElement('p')
+                                fine.textContent = `Fine :${rent.fine}`
+                                dor.appendChild(fine)
+                            }
+                            row.append(id,title,dor)
+                            tableBody.appendChild(row)
+                        }
+                    }
+
+            })
+        }
 
         function closeLogin(){
             let popup=document.getElementById("loginForm");
@@ -198,6 +241,12 @@
             blur.classList.toggle('active');    
         }
         
+        function logoutUser(){
+
+        location.assign('http://127.0.0.1:8000/logout')
+
+        }
+
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
