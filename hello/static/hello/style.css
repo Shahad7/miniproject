@@ -74,11 +74,16 @@ header .img1{
 }
 
 .main-bg{
-    background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
-    url("images/bg-1.jpg");
+    background:linear-gradient(89.96deg, #14141C -3.26%, rgba(20, 20, 28, 0.88) 29.63%, rgba(20, 20, 28, 0) 88.58%),
+    url("images/bg2.jpg");
+    background-size: cover;
     padding: 30px 100px 0px;
     height: 100vh;
     color: #ffffff;
+}
+
+.bg2{
+    background: linear-gradient(89.96deg, #14141C -3.26%, rgba(20, 20, 28, 0.88) 29.63%, rgba(20, 20, 28, 0) 88.58%),url("images/bg-1.jpg");
 }
 
 .searchbar{
