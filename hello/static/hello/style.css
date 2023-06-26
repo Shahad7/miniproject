@@ -150,7 +150,8 @@ header .img1{
 }
 
 .cus-len{
-    height: 61% !important;
+    height: 64%;
+    bottom: 14%;
 }
 
 .chat-popup .flex-cus{
@@ -600,6 +601,17 @@ header .img1{
     font-size: 15px;
 }
 
+.profile-sidebar .popup-content .b1{
+    padding: 7px;
+    background-color: #cd0000;
+    color: #ffffff;
+    border-style: none;
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    font-size: 15px;
+    cursor: pointer;
+}
+
 .profile-sidebar .img3{
     height: 30px;
     width: 19px;
@@ -642,6 +654,37 @@ header .img1{
     top: 5px;
     right: 10px;
     z-index: 9999;
+}
+
+.dash-bg{
+    height: 40vh;
+}
+
+.dash-bg .row1{
+    height: 25vh;
+}
+
+.table-con{
+    padding: 3.5%;
+}
+
+.table-con table{
+    width: 100%;
+    border: 0.5px solid #44476a;
+    border-right: 0.5px solid #44476a;
+    border-collapse: collapse;
+    border-radius: 5px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px #44476a;
+    text-align: center;
+}
+
+.table-con table th{
+    border-right: 0.5px solid #44476a;
+}
+
+.table-con table td{
+    border-right: 0.5px solid #44476a;
 }
 
 .open-login{

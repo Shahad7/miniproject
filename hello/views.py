@@ -204,3 +204,6 @@ def checkLogin(request):
         return JsonResponse({"status": "true"})
     else:
         return JsonResponse({"status": "false"})
+
+def dashboard(request):
+    return render(request,'hello/dashboard.html')

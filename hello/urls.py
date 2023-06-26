@@ -19,7 +19,8 @@ urlpatterns = [
     path('update-stock',views.updateStock,name="updateStock"),
     path('retrieve2',views.retrieve2,name="retrieve2"),
     path('update',views.update,name="update"),
-    path('check-login',views.checkLogin,name="checkLogin")
+    path('check-login',views.checkLogin,name="checkLogin"),
+    path('dashboard',views.dashboard,name="dashboard")
 ]
 
 """if settings.DEBUG:

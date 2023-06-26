@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'hello/images/book-solid.png' %}">
+    <title>Library Management System</title>
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="{% static 'hello/style.css' %}">
+</head>
+<body>
+    <div class="blurred" id="Wrapper">
+        <header>
+            <div class="main-bg dash-bg">
+                <div class="header-sec cus-margin">
+                    <img src="{% static 'hello/images/book-solid.png' %}">
+                    <nav class="navbar">
+                        <a href="{% url 'hello:index' %}">Home</a>
+                        <a href="{% url 'hello:student' %}">Catalogue</a>
+                        <a>Services</a>
+                        <a>Library Staffs</a>
+                        <a>Contact</a>
+                        <img class="img1" onclick="openLogin()" 
+                        src="{% static 'hello/images/profile.png' %}">
+                    </nav>
+                </div>
+                <div class="row1">
+                    <h1>Dashboard</h1>
+                </div>
+            </div>
+        </header>
+    
+        <!-- Main Contents -->
+        <section>
+            <div class="table-con">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">No.</th>
+                            <th style="width: 15%;">ID</th>
+                            <th style="width: 27.5%;">Book Name</th>
+                            <th style="width: 27.5%;">Student Name</th>
+                            <th style="width: 15%;">DOR</th>
+                            <th style="width: 10%;">Fine</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>LIB07</td>
+                            <td>GOT</td>
+                            <td>Lexi</td>
+                            <td>13/6/23</td>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>LIB08</td>
+                            <td>Harry Potter</td>
+                            <td>Lexi</td>
+                            <td>15/8/23</td>
+                            <td>None</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>LIB07</td>
+                            <td>GOT</td>
+                            <td>Lexi</td>
+                            <td>13/6/23</td>
+                            <td>300</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    
+</body>
+</html>
