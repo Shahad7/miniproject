@@ -23,7 +23,6 @@
                         <a>Services</a>
                         <a>Library Staffs</a>
                         <a>Contact</a>
-                        <a href="{% url 'hello:logout' %}">Logout</a>
                         <img class="img1" onclick="openLogin()" 
                         src="{% static 'hello/images/profile.png' %}">
                     </nav>
@@ -76,7 +75,7 @@
                     </tbody>
                 </table>
                 <div class="cus-flex">
-                    <button onclick="" class="but1">Log Out</button>
+                    <button onclick="logoutUser()" class="but1">Log Out</button>
                 </div>
             </div>
         </section>
@@ -117,7 +116,11 @@
         })
     }
 
+    function logoutUser() {
 
+            location.assign('http://127.0.0.1:8000/logout')
+
+        }
 
 </script>
 
