@@ -612,6 +612,17 @@ header .img1{
     cursor: pointer;
 }
 
+.but1{
+    margin-top: 20px;
+    padding: 7px;
+    background-color: #cd0000;
+    color: #ffffff;
+    border-style: none;
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    font-size: 18px;
+    cursor: pointer;}
+
 .profile-sidebar .img3{
     height: 30px;
     width: 19px;
