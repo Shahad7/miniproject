@@ -21,8 +21,8 @@
                         <a>Home</a>
                         <a href="{% url 'hello:catalogue' %}">Catalogue</a>
                         <a>Services</a>
-                        <a>Library Staffs</a>
-                        <a>Contact</a>
+                        <a href="{% url 'hello:staff' %}">Library Staffs</a>
+                        <a href="{% url 'hello:contact' %}">Contact</a>
                         <img class="img1" onclick="openLogin()" 
                         src="{% static 'hello/images/profile.png' %}">
                     </nav>
@@ -41,7 +41,7 @@
     </div>
 
     <!-- popup signup/login -->
-    <div class="chat-popup" id="loginForm">
+    <div class="chat-popup" id="loginForm" style="height: 55%;">
         <div class="flex-cus flexm scroll1">
             <div class="block1 width5">
                 <img class="img1" src="{% static 'hello/images/popup-library.jpg' %}">
@@ -62,12 +62,12 @@
                         Incorrect username or password</div>
 
                     <label style="font-style: normal;" for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Username" id="username" name="username" 
+                    <input type="text" style="height: 25px;" placeholder="Username" id="username" name="username" 
                     onfocus="hideLoginError()" autocomplete = "off" 
                     required><br>
         
                     <label style="font-style: normal;" for="password"><b>Password</b></label>
-                    <input type="password" placeholder="Password" id="password" 
+                    <input type="password" style="height: 25px;" placeholder="Password" id="password" 
                     onfocus="hideLoginError()" name="password" required><br>
         
                     <button type="button" id="submitButton" class="button">Submit</button><br>

@@ -145,7 +145,6 @@ header .img1{
     transition: 1s;
     border-radius: 10px;
     overflow: auto;
-    height: 55%;
 	padding: 3%;
 }
 
@@ -172,12 +171,13 @@ header .img1{
 }
 
 .chat-popup .flex-cus .popup-form input{
+    font-family: 'Montserrat';
 	width: 90%;
 	border-radius: 5px;
 	margin-bottom: 10px;
     margin-top: 5px;
-    height: 25px;
-    border-color: #44476a;
+    background-color: #e6e7ee;
+    border-style: none;
     padding: 10px;
 }
 
@@ -405,6 +405,12 @@ header .img1{
     }
 }
 
+.signup-container{
+    width: 40%;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+}
 
 #user-signup{
     display: flex;
@@ -419,21 +425,18 @@ header .img1{
 
 }
 #user-signup input{ 
-
-    border: solid white 4px;
+    border-style: none;
     width: 300px;
     height: 40px;
-    text-align: center;
-    font-size: 20px;
-    border-radius: 10px;
-    background-color: rgba(0,0,0,0.1);
-    color: white;
-    padding: 8px;
+    font-size: 17px;
+    border-radius: 5px;
+    background-color: #e6e7ee;
+    padding: 8px 12px;
     margin-bottom:20px;
 }
 
 #user-signup input[type="submit"]{
-    border-radius: 10px;
+    border-radius: 5px;
     border-style: none;
     background-color: #cd0000;
     color: #ffffff;
@@ -696,6 +699,86 @@ header .img1{
 
 .table-con table td{
     border-right: 0.5px solid #44476a;
+}
+
+.bg-3{
+    background: linear-gradient(89.96deg, #14141C -3.26%, rgba(20, 20, 28, 0.88) 29.63%, rgba(20, 20, 28, 0) 88.58%),url("images/bg-3.jpg");
+    height: 50vh;
+}
+
+.body-con-st{
+    padding: 5%;
+}
+
+.t-block{
+    margin: 0 8% 4%;
+    padding: 4% 2%;
+    box-shadow: 20px 20px 60px #b8b4b4;
+    background-color: #e6e7ee;
+    border-radius: 15px;
+}
+
+
+.t-details{
+    display: block;
+    font-family: 'Montserrat';
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+}
+
+.t-details h3{
+    font-weight: 700;
+    color: #14141C;
+}
+
+.t-details h4{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.t-details h5{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.t-details h5 a{
+    text-decoration: none;
+    color: #44476a;
+}
+
+.bg-4{
+    background: linear-gradient(89.96deg, #14141C -3.26%, rgba(20, 20, 28, 0.88) 29.63%, rgba(20, 20, 28, 0) 88.58%),url("images/bg-4.jpg");
+    height: 50vh;
+}
+
+.body-con-cont{
+    padding: 5% 10%;
+}
+
+.cont-block{
+    display: block;
+    text-align: center;
+}
+
+.cont-block img{
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.cont-block h5{
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.cont-block h4{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.cont-block a{
+    text-decoration: none;
+    color: #44476a;
 }
 
 .open-login{

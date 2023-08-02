@@ -24,8 +24,10 @@ urlpatterns = [
     path('dashboard', views.dashboard, name="dashboard"),
     path('fetch-rent-details', views.fetchRentDetails, name="fetchRentDetails"),
     path('catalogue', views.catalogue, name="catalogue"),
-    path('fetch-dashboard-contents', views.fetchDashBoardContent,
-         name="fetchDashBoardContent")
+    path('fetch-dashboard-contents', views.fetchDashBoardContent,name="fetchDashBoardContent"),
+    path('contact',views.contact,name="contact"),
+    path('staff',views.staff,name="staff")
+     
 ]
 
 """if settings.DEBUG:

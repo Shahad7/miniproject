@@ -1,0 +1,361 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'hello/images/book-solid.png' %}">
+    <title>Library Management System</title>
+
+    <!-- Bootstrap cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="{% static 'hello/style.css' %}">
+    
+</head>
+<body>
+    <div class="blurred" id="Wrapper">
+        <header>
+            <div class="main-bg bg-3">
+                <div class="header-sec cus-margin">
+                    <img src="{% static 'hello/images/book-solid.png' %}">
+                    <nav class="navbar">
+                        <a href="{% url 'hello:index' %}">Home</a>
+                        <a href="{% url 'hello:catalogue' %}">Catalogue</a>
+                        <a>Services</a>
+                        <a>Library Staffs</a>
+                        <a href="{% url 'hello:contact' %}">Contact</a>
+                        <img class="img1" onclick="openLogin()" 
+                        src="{% static 'hello/images/profile.png' %}">
+                    </nav>
+                </div>
+                <div class="row1">
+                    <h1>Library Staffs</h1>
+                </div>
+            </div>
+        </header>
+    
+        <!-- Main Contents -->
+        <div class="body-con-st">
+            <div class="t-block">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="{% static 'hello/images/profile-g.png' %}" alt="">
+                    </div>
+                    <div class="col-md-9 cus-flex">
+                        <div class="t-details">
+                            <b><h3>Staff 1</h3></b>
+                            <h4>Head Of the Library</h4>
+                            <p>As the head of the library, my role is to oversee and manage all library operations, ensuring a seamless and enriching experience for patrons by curating an extensive collection of resources and implementing innovative technologies for easy access and efficient services.</p>
+                            <h5>Phone No: <a href="#">+91 99988 77755</a></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t-block">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="{% static 'hello/images/profile-g.png' %}" alt="">
+                    </div>
+                    <div class="col-md-9 cus-flex">
+                        <div class="t-details">
+                            <b><h3>Staff 2</h3></b>
+                            <h4>Assistant</h4>
+                            <p>As the library assistant, I assist patrons with their inquiries, help manage the library's resources, and ensure a pleasant and efficient experience for all visitors. My goal is to support users in finding the information they need and maintaining a well-organized and user-friendly library environment.</p>
+                            <h5>Phone No: <a href="#">+91 99988 77766</a></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="t-block">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="{% static 'hello/images/profile-g.png' %}" alt="">
+                    </div>
+                    <div class="col-md-9 cus-flex">
+                        <div class="t-details">
+                            <b><h3>Staff 3</h3></b>
+                            <h4>Assistant</h4>
+                            <p>As the library assistant, I assist patrons with their inquiries, help manage the library's resources, and ensure a pleasant and efficient experience for all visitors. My goal is to support users in finding the information they need and maintaining a well-organized and user-friendly library environment.</p>
+                            <h5>Phone No: <a href="#">+91 99988 77744</a></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup signup/login -->
+    <div class="chat-popup" id="loginForm">
+        <div class="flex-cus flexm scroll1">
+            <div class="block1 width5">
+                <img class="img1" src="{% static 'hello/images/popup-library.jpg' %}">
+                <div class="block1" style="margin-top: 20px;">
+                    <h3>Lorem ipsum<br></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
+                </div>
+            </div>
+            <div class="width5 form1">
+                <form action="{% url 'hello:index' %}" id="loginForm" method="post" class="popup-form">
+                    {% csrf_token %}
+                    <div style="display: flex;justify-content:space-between">
+                        <h1 class="cus-h1">Login</h1>
+                        <!-- <div class="close-btn" style="cursor: pointer;" onclick="closepopup()">&times;</div> -->
+                    </div>
+                    <div id="login-error" style="margin-bottom:8px;color:red; 
+                     visibility: hidden;">
+                        Incorrect username or password</div>
+
+                    <label style="font-style: normal;" for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Username" id="username" name="username" 
+                    onfocus="hideLoginError()" autocomplete = "off" 
+                    required><br>
+        
+                    <label style="font-style: normal;" for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Password" id="password" 
+                    onfocus="hideLoginError()" name="password" required><br>
+        
+                    <button type="button" id="submitButton" class="button">Submit</button><br>
+
+                    <div>
+                        Don't Have a account? <a 
+                        href="{% url 'hello:signup' %}" 
+                        onclick="closeLogin();openSignUp()">Sign Up</a></div>
+                    <!-- <div style="margin-top:6px;"><a href=""> Sign Up</a> here if you're a Librarian</div> -->
+
+                    <div class="align1">
+                        <img class="img3"  onclick="closeLogin()" 
+                        src="{% static 'hello/images/xmark.png' %}">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- signup popup -->
+    <!-- <div class="chat-popup-cus" id="signUpForm">
+        <div class="flex-cus flexm scroll1">
+            <div class="block1 width5">
+                <img class="img1" src="images/signup.jpg">
+                <div class="block1" style="margin-top: 20px;">
+                    <h3>Lorem ipsum<br></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi</p>
+                </div>
+            </div>
+            <div class="width5">
+                <form action="send.php" method="post" class="popup-form">
+                    <div style="display: flex;justify-content:space-between">
+                        <h1>Sign Up</h1>
+                        <div class="close-btn" style="cursor: pointer;" onclick="closepopup()">&times;</div>
+                    </div>
+        
+                    <label style="font-style: normal;" for="number"><b>Phone Number</b></label>
+                    <input type="tel" placeholder="Phone Number" name="number" required><br>
+
+                    <label style="font-style: normal;" for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Password" name="password" required><br>
+
+                    <button type="submit" class="button">Submit</button>
+
+                    <span style="text-align: center;">Already Have a account? <a onclick="closeSignUp();openLogin()">Login</a></span>
+
+                    <div class="align1">
+                        <img class="img3"  onclick="closeSignUp()" src="images/xmark.png">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- profile sidebar -->
+    <!-- popup signup/login -->
+    <div class="profile-sidebar" id="sidebar">
+        <div class="popup-content" id="sidebar-content">
+            <div class="cus-flex">
+                <img class="img4" src="{% static 'hello/images/profile-g.png' %}" alt="">
+            </div>
+            <h5 id="sidebar-username"></h5>
+            <p id="table-title" style="text-decoration: underline;">Book Rent Details</p>
+            <section class="table-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Id</th>
+                            <th style="width: 65%;">Name</th>
+                            <th style="width: 25%;">DOR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-content">
+                      <!-- <tr>
+                            <td>LIB49</td>
+                            <td>GOT</td>
+                            <td>12/7/23</td>
+                        </tr>
+                        <tr>
+                            <td>LIB49</td>
+                            <td>GOT</td>
+                            <td>
+                                24/6/23
+                                <p>Fine: 150</p>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </section>
+            <p id="sidebar-notice">Fine is given by adding 150rs for each week exceeding from DOR(date of return)</p>
+            <div class="align1">
+                <img id="close-sidebar" class="img3"  onclick="" 
+                src="{% static 'hello/images/xmark.png' %}">
+            </div>
+            <div class="cus-flex">
+                <button onclick="logoutUser()" class="b1">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openLogin(e) {
+                let popup = document.getElementById("loginForm");
+                var blur = document.getElementById('Wrapper');
+                const sidebar = document.getElementById('sidebar')
+                fetch("http://127.0.0.1:8000/check-login")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data['status'] == 'true') {
+                            if(data['role']=='LIBRARIAN')
+                                location.assign("http://127.0.0.1:8000/dashboard")
+                            else{
+                                sidebar.style.display = 'block'
+                                addSidebarContent()
+                            }
+                        }
+                        else {
+                            popup.classList.add("open-login");
+                            blur.classList.toggle('active');
+                        }
+                    })
+            }
+        const closeSidebarButton = document.getElementById('close-sidebar')
+        closeSidebarButton.addEventListener('click', () => {
+            sidebar.style.display = 'none'
+        })
+
+        function addSidebarContent() {
+            const sidebarUsername =  document.getElementById('sidebar-username')
+            const table = document.querySelector('.table-body')
+            const tableBody = document.getElementById('table-content')
+            const tableTitle = document.getElementById('table-title')
+            fetch("http://127.0.0.1:8000/fetch-rent-details")
+                .then(response => response.json())
+                .then(data => {
+                    sidebarUsername.textContent = data['user']
+                    let rents = data['rents']
+                    if(rents.length==0)
+                    {
+                        table.style.display = 'none'
+                        let noRentDialog = document.createElement('h4')
+                        noRentDialog.textContent = 'You have no rents'
+                        tableTitle.parentNode.insertBefore(noRentDialog, tableTitle.nextSibling);
+
+                    }
+                    else{
+                        tableBody.replaceChildren()
+                        for(rent of rents){
+                            let row = document.createElement('tr')
+
+                            let id = document.createElement('td')
+                            id.textContent = 'LIB'+rent.id
+                            let title = document.createElement('td')
+                            title.textContent = rent.title
+                            let dor = document.createElement('td')
+                            let [x,y,z] = rent.dor.split('-')
+                            let date = z+'/'+y+'/'+x.substring(2)
+                            dor.textContent = date
+                            if(rent.fine>0){
+                                let fine = document.createElement('p')
+                                fine.textContent = `Fine :${rent.fine}`
+                                dor.appendChild(fine)
+                            }
+                            row.append(id,title,dor)
+                            tableBody.appendChild(row)
+                        }
+                    }
+
+            })
+        }
+
+        function closeLogin(){
+            let popup=document.getElementById("loginForm");
+            popup.classList.remove("open-login");
+            var blur= document.getElementById('Wrapper');
+            blur.classList.toggle('active');    
+        }
+        
+        function logoutUser(){
+
+        location.assign('http://127.0.0.1:8000/logout')
+
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    
+        const username = document.querySelector('#username')
+        const password = document.querySelector('#password')
+        const loginForm = document.getElementById('loginForm')
+        const submitButton = document.getElementById('submitButton')
+        const loginError = document.getElementById('login-error')
+
+        function hideLoginError(){
+            loginError.style.visibility = 'hidden'
+
+        }
+        submitButton.addEventListener('click',()=>{
+
+            fetch("http://127.0.0.1:8000/index",{
+            method:'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'X-CSRFToken' : getCookie('csrftoken')
+            },
+            body:JSON.stringify({
+                'username':username.value,
+                'password':password.value,
+            })
+            })
+            .then(response => response.json())
+            .then(data =>{
+                if(data['result']=='true')
+                {
+                    if(data['role']=='LIBRARIAN')
+                        location.assign("http://127.0.0.1:8000/librarian")
+                    else
+                        closeLogin()
+                }
+                else{
+                    loginError.style.visibility = 'visible'
+
+                }
+            
+            })
+            
+
+        })
+    </script>
+</body>
+</html>

@@ -237,3 +237,9 @@ def fetchDashBoardContent(request):
             id=rent['bid']).title, 'fine': rent['fine'], 'dor': rent['dor']}
         data.append(elt)
     return JsonResponse({"rents": data})
+
+def contact(request):
+    return render(request,'hello/contact.html')
+
+def staff(request):
+    return render(request,'hello/staff.html')

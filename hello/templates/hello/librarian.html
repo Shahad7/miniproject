@@ -24,8 +24,8 @@
                     <a href="{% url 'hello:index' %}">Home</a>
                     <a href="{% url 'hello:catalogue' %}">Catalogue</a>
                     <a>Services</a>
-                    <a>Library Staffs</a>
-                    <a>Contact</a>
+                    <a href="{% url 'hello:staff' %}">Library Staffs</a>
+                    <a href="{% url 'hello:contact' %}">Contact</a>
                     <img class="img1" onclick="redirectToBoard()" src="{% static 'hello/images/profile.png' %}">
                 </nav>
             </div>
