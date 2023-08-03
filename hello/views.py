@@ -6,7 +6,7 @@ from .models import Book, myuser, Rent
 import json
 from django.core.mail import send_mail
 from . import cron
-from datetime import datetime
+from datetime import datetime, date
 # Create your views here.
 
 
@@ -123,9 +123,6 @@ def rent(request):
         bid = int(data['bid'])
         sid = int(request.user.id)
         dor = datetime.strptime(data['date'], '%m/%d/%Y').date()
- #       book = Book.objects.get(pk=bid)
- #       student = myuser.objects.get(pk=sid)
- #       ren = Rent(bid=book,sid=student)
         ren = Rent(bid=bid, sid=sid, dor=dor)
         ren.save()
         book = Book.objects.get(pk=bid)
@@ -215,6 +212,15 @@ def fetchRentDetails(request):
     sid = request.user.id
     rents = list(Rent.objects.filter(sid=sid).values())
     data = []
+
+    # for updating fines
+    today = date.today()
+    for rent in rents:
+        difference = int(str(today - rent['dor']).split()[0])
+        # print(difference)
+        if difference//7 > 0:
+            rent['fine'] = (difference//7)*150
+
     for rent in rents:
         elt = {'id': rent['id'], 'title': Book.objects.get(
             id=rent['bid']).title, 'fine': rent['fine'], 'dor': rent['dor']}
@@ -238,8 +244,10 @@ def fetchDashBoardContent(request):
         data.append(elt)
     return JsonResponse({"rents": data})
 
+
 def contact(request):
-    return render(request,'hello/contact.html')
+    return render(request, 'hello/contact.html')
+
 
 def staff(request):
-    return render(request,'hello/staff.html')
+    return render(request, 'hello/staff.html')
